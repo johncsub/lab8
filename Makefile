@@ -4,7 +4,7 @@
 all: lab1
 
 lab1: lab1.cpp
-	g++ dturack.cpp lab1.cpp -Wall -olab1 -lX11 -lGL -lGLU -lm
+	g++ danielT.cpp lab1.cpp -Wall -olab1 -lX11 -lGL -lGLU -lm
 
 clean:
 	rm -f lab1
