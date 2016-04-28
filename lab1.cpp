@@ -4,27 +4,11 @@
 //Assignment is to modify this program.
 //You will follow along with your instructor.
 //
-//Elements to be learned in this lab...
-//
-//. general animation framework
-//. animation loop
-//. object definition and movement
-//. collision detection
-//. mouse/keyboard interaction
-//. object constructor
-//. coding style
-//. defined constants
-//. use of static variables
-//. dynamic memory allocation
-//. simple opengl components
-//. git
-//
-//elements we will add to program...
-//. Game constructor
-//. multiple particles
-//. gravity
-//. collision detection
-//. more objects
+
+// commented out by JBC
+// #include "danielt.h"
+
+
 //
 #include <iostream>
 #include <cstdlib>
@@ -35,7 +19,6 @@
 #include <X11/keysym.h>
 #include <GL/glx.h>
 
-// #include "danielt.h"
 
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
