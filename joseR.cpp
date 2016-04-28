@@ -5,6 +5,9 @@
 //			the user to play, change settings, and exit the game.
 #include <GL/glx.h>
 #include "joseR.h"
+extern "C" {
+	#include "fonts.h"
+}
 
 extern void init_opengl(); 
 
@@ -50,6 +53,22 @@ void renderMenuObjects(Game *game)
 	}
 }
 
+void renderMenuText(Game *game)
+{
+	Rect rt;
+	int j = 0;
+	rt.bot = WINDOW_HEIGHT - game->buttonSpacer[j] - 10;
+	rt.left = WINDOW_WIDTH / BUTTON_X;
+	rt.center = 1;
+	ggprint16(&rt, 16, 0x00ffffff, "Exit");
+	j++;
+	rt.bot = WINDOW_HEIGHT - game->buttonSpacer[j] - 10;
+	ggprint16(&rt, 16, 0x00ffffff, "Settings");
+	j++;
+	rt.bot = WINDOW_HEIGHT - game->buttonSpacer[j] - 10;
+	ggprint16(&rt, 16, 0x00ffffff, "Play");
+}
+
 void mouseOver(int savex, int savey, Game *game)
 {
 	Shape *s;
@@ -65,3 +84,28 @@ void mouseOver(int savex, int savey, Game *game)
 		}
 	}
 }
+
+// Function Locations
+// ------------------------------
+// drawMenu(&game) should be in: int main(void)
+// 	before the infinite loop for "start animation"
+//
+// mouseOver(savex, savey, game) should be in: void check_mouse(...)
+//	Should be at the end of the code that checks if the mouse moved.
+//  The code itself is below:
+//
+//	if (savex != e->xbutton.x || savey != e->xbutton.y) {
+//		savex = e->xbutton.x;
+//		//JR: Changed to correctly get mouse y location
+//		savey = WINDOW_HEIGHT - e->xbutton.y;
+//		if (++n < 10)
+//			return;
+//		//JR: Function to detect when a mouse is on a button
+//		//	Using collision detection to tell when the mouse is on
+//		//	a specific button in our menu.
+//		mouseOver(savex, savey, game);
+//	}
+//
+// renderMenuObjects(game) and renderMenuText(game) should be in
+//	the void render(Game *game) function.
+//

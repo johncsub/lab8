@@ -43,6 +43,6 @@ struct Game {
 extern void drawMenu(Game *game);
 extern void mouseOver(int x, int y, Game *game);
 extern void renderMenuObjects(Game *game);
-
+extern void renderMenuText(Game *game);
 
 #endif
