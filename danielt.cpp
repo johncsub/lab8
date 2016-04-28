@@ -3,10 +3,9 @@
 #include <iostream>
 using namespace std;
 
-int main()
+void eMissileCollision()
 {
   for (int i=1; i<4; i++) {
     cout << "dturack test" << i << " " << endl;
   }
-  return 0;
 }
