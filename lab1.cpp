@@ -5,10 +5,8 @@
 //You will follow along with your instructor.
 //
 
-// commented out by JBC
+// commented out by JBC AGAIN!
 // #include "danielt.h"
-// new JBC comment to push
-// new JBC comment to push
 
 
 //
