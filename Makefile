@@ -4,7 +4,7 @@
 all: missileCommand
 
 missileCommand: missileCommand.cpp
-	g++  missileCommand.cpp -Wall -lX11 -lGL -lGLU -lm -o missileCommand
+	g++  missileCommand.cpp -Wall -lX11 -lGL -lGLU -lm -omissileCommand
 
 clean:
 	rm -f missileCommand
