@@ -1,12 +1,12 @@
 # cs335 lab1
 # to compile your project, type make and press enter
 
-all: lab1
+all: missileCommand
 
-lab1: lab1.cpp
-	g++  lab1.cpp -Wall -olab1 -lX11 -lGL -lGLU -lm
+missileCommand: missileCommand.cpp
+	g++  missileCommand.cpp -Wall -lX11 -lGL -lGLU -lm -o missileCommand
 
 clean:
-	rm -f lab1
+	rm -f missileCommand
 	rm -f *.o
 
