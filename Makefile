@@ -1,4 +1,4 @@
-# cs335 lab1
+# cs335 missileCommand Project
 # to compile your project, type make and press enter
 
 all: missileCommand
