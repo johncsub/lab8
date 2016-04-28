@@ -35,6 +35,8 @@
 #include <X11/keysym.h>
 #include <GL/glx.h>
 
+#include "danielt.h"
+
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
 
