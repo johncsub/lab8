@@ -62,6 +62,7 @@ extern void timeCopy(struct timespec *dest, struct timespec *source);
 //
 
 int xres=1250, yres=900;
+int newMissiles = 1;
 
 struct EMissile {
     Vec pos;
@@ -84,6 +85,6 @@ void eMissileCollision()
 void createEMissiles()
 {
     while (newMissiles) {
-
+    	continue;
     }
 }
