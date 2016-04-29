@@ -101,9 +101,7 @@ void createEMissiles(Game *g)
 
     for (int i=0; i<MAX_EMISSILES; i++) {
 	EMissile *e = &g->emarr[g->nmissiles];
-// JBC comment to avoid redefinition compilation errors
 	e->pos.y = 400;
-// JBC comment to avoid redefinition compilation errors
 	e->pos.x = 400;
 	e->pos.z = 0;
 	e->vel.y = 0.05;
