@@ -102,9 +102,9 @@ void createEMissiles(Game *g)
     for (int i=0; i<MAX_EMISSILES; i++) {
 	EMissile *e = &g->emarr[g->nmissiles];
 // JBC comment to avoid redefinition compilation errors
-//	e->pos.y = yres+100;
+	e->pos.y = 400;
 // JBC comment to avoid redefinition compilation errors
-//	e->pos.x = xres + (rand()%xres);
+	e->pos.x = 400;
 	e->pos.z = 0;
 	e->vel.y = 0.05;
 	e->vel.x = -0.02;
@@ -120,18 +120,12 @@ void renderEMissiles(Game *g) {
     for (int i=0; i<g->nmissiles; i++) {
 	EMissile *e = &g->emarr[i];
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 1.0);
-	glBegin(GL_POINTS);
-	glVertex2f(e->pos.x,      e->pos.y);
-	glVertex2f(e->pos.x-1.0f, e->pos.y);
-	glVertex2f(e->pos.x+1.0f, e->pos.y);
-	glVertex2f(e->pos.x,      e->pos.y-1.0f);
-	glVertex2f(e->pos.x,      e->pos.y+1.0f);
-	glColor3f(0.8, 0.8, 0.8);
-	glVertex2f(e->pos.x-1.0f, e->pos.y-1.0f);
-	glVertex2f(e->pos.x-1.0f, e->pos.y+1.0f);
-	glVertex2f(e->pos.x+1.0f, e->pos.y-1.0f);
-	glVertex2f(e->pos.x+1.0f, e->pos.y+1.0f);
+	glColor3ub(150, 100, 230);
+        glBegin(GL_QUADS);
+        glVertex2i(e->pos.x+2, e->pos.y-2);
+        glVertex2i(e->pos.x-2, e->pos.y+2);
+        glVertex2i(e->pos.x+2, e->pos.y+2);
+        glVertex2i(e->pos.x-2, e->pos.y-2);
 	glEnd();
 	glPopMatrix();
     }
