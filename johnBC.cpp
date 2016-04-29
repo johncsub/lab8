@@ -6,7 +6,7 @@
  *          destroy/Stop Emissiles (Enemy Missiles)
  *          
  *          So far I just change the title bar text with mouse left and 
- *          right buttonsto prove I am accessing my functions from 
+ *          right buttons to prove I am accessing my functions from 
  *          main file "missileCommand.cpp" and visa-versa
  * 
  * 
