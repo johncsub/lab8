@@ -23,6 +23,9 @@
 #include "danielT.h"
 #include "joseR.h"
 
+// JG go through this to remove the redefs
+// #include "joseG.h"
+
 
 
 //X Windows variables
