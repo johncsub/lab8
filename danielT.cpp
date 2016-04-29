@@ -16,6 +16,8 @@
 #include <X11/keysym.h>
 #include <GL/glx.h>
 #include "danielT.h"
+// #include "missileCommand.h"
+
 //#include "log.h"
 //#include "ppm.h"
 //extern "C" {
@@ -45,6 +47,17 @@ const float gravity = -0.2f;
 #define ALPHA 1
 const int MAX_EMISSILES = 10;
 
+
+//defined types
+typedef float Flt;
+typedef Flt Matrix[4][4];
+//
+
+
+
+
+ 
+
 //X Windows variables
 //Display *dpy;
 //Window win;
@@ -62,7 +75,8 @@ extern double timeDiff(struct timespec *start, struct timespec *end);
 extern void timeCopy(struct timespec *dest, struct timespec *source);
 //
 
-int xres=1250, yres=900;
+// JBC comment to avoid  compilation errors
+//int xres=1250, yres=900;
 int newMissiles = 1;
 
 /*struct EMissile {
@@ -87,8 +101,10 @@ void createEMissiles(Game *g)
 
     for (int i=0; i<MAX_EMISSILES; i++) {
 	EMissile *e = &g->emarr[g->nmissiles];
-	e->pos.y = yres+100;
-	e->pos.x = xres + (rand()%xres);
+// JBC comment to avoid redefinition compilation errors
+//	e->pos.y = yres+100;
+// JBC comment to avoid redefinition compilation errors
+//	e->pos.x = xres + (rand()%xres);
 	e->pos.z = 0;
 	e->vel.y = 0.05;
 	e->vel.x = -0.02;

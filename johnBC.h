@@ -1,20 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /* 
- * File:   johnBC.h
- * Author: student
- *
- * Created on April 28, 2016, 12:17 PM
+ * File:   johnBC.h for -> johnBC.cpp
+ * Author:  John B. Crossley
+ * Program: missileCommand (team Project)
+ * Purpose: Functions for firing Dmissiles (defense missiles) up to 
+ *          destroy/Stop Emissiles (Enemy Missiles)
+ * 
  */
+
+#ifndef MISSILECOMMAND_H
+#define MISSILECOMMAND_H
+
+#endif
 
 #ifndef JOHNBC_H
 #define JOHNBC_H
 
-extern void fireDefenseMissile(void);
+ void fireDefenseMissile();
+ void changeTitle();
 
 
 

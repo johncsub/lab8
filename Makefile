@@ -3,8 +3,8 @@
 
 all: missileCommand
 
-missileCommand: missileCommand.cpp
-	g++  missileCommand.cpp -Wall -lX11 -lGL -lGLU -lm -omissileCommandMain
+missileCommand:  missileCommand.cpp johnBC.cpp danielT.cpp joseR.cpp joseG.cpp
+	g++   missileCommand.cpp johnBC.cpp danielT.cpp joseR.cpp joseG.cpp -Wall -lX11 -lGL -lGLU -lm -omissileCommandMain
 
 clean:
 	rm -f missileCommand

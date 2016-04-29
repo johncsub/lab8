@@ -2,7 +2,7 @@
 //Program: joseG.cpp
 //Purpose: This program is my source code for the structures/cities
 //
-#pragma once
+// #pragma once
 #include "joseG.h"
 #include <GL/glx.h>
 extern void initOpengl();
