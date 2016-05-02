@@ -5,9 +5,9 @@
 // #pragma once
 #include "joseG.h"
 #include <GL/glx.h>
-extern void initOpengl();
+extern void init_opengl();
 void renderStruc(Structures *shape) {
-	initOpengl();
+	init_opengl();
         //floor shape
         shape->floor.width = 512;
         shape->floor.height = 100;

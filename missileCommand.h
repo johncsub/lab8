@@ -34,8 +34,8 @@
 //X Position of all buttons
 //Divides WINDOW_WIDTH by the number below
 #define BUTTON_X 4.25
-#define WINDOW_WIDTH  800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH  1024
+#define WINDOW_HEIGHT 768
 // #define WINDOW_WIDTH  1024
 // #define WINDOW_HEIGHT 768
 #define MAX_PARTICLES 2000
@@ -97,30 +97,32 @@ struct Structures {
 };
 
 struct Game {
-    Shape box;
     
     // JBC comment out
     // Particle particle[10];                       
-    
+     Shape box[5];
+    //JR: This will store the values of the x-pos to be used
+    //      for correct font placement on buttons
+    int buttonSpacer[BUTTONS];
+    //JR: This will be used to return which button the mouse
+    //      is currently on in the menus
+    int mouseOnButton[BUTTONS];
+    //JR: Will store value for menu if left click was on Exit button
+    //      if 1 will exit
+    int menuExit;  
     EMissile *emarr;                                  
     int n;
     int nmissiles;
     Game() {
-	emarr = new EMissile[10];
-	n = 0;
-	nmissiles = 0;
+	   emarr = new EMissile[10];
+	   n = 0;
+	   nmissiles = 0;
+       menuExit = 0;
     }
     ~Game() {
 	delete [] emarr;
     }
-    Particle particle[MAX_PARTICLES];
-    //JR: This will store the values of the x-pos to be used
-    //		for correct font placement on buttons
-    int buttonSpacer[BUTTONS];
-    //JR: This will be used to return which button the mouse
-    //		is currently on in the menus
-    int mouseOnButton[BUTTONS];
-    
+    Particle particle[MAX_PARTICLES];   
 };
 
 

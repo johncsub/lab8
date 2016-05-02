@@ -4,6 +4,7 @@
 // Purpose: Draw and create a functioning menu that will allow
 //			the user to play, change settings, and exit the game.
 #include <GL/glx.h>
+#include "missileCommand.h"
 #include "joseR.h"
 extern "C" {
 	#include "fonts.h"
@@ -57,6 +58,7 @@ void renderMenuText(Game *game)
 	int j = 0;
 	rt.bot = WINDOW_HEIGHT - game->buttonSpacer[j] - 10;
 	rt.left = WINDOW_WIDTH / BUTTON_X;
+	//std::cout << rt.bot << " " << rt.left << std::endl;
 	rt.center = 1;
 	ggprint16(&rt, 16, 0x00ffffff, "Exit");
 	j++;
@@ -80,6 +82,15 @@ void mouseOver(int savex, int savey, Game *game)
 		} else {
 			game->mouseOnButton[j] = 0;
 		}
+	}
+}
+
+void menuClick(Game *game)
+{
+	//Exit Button
+	if (game->mouseOnButton[0] == 1){
+		std::cout << "test" << std::endl;
+		game->menuExit = 1;
 	}
 }
 
