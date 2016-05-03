@@ -1,23 +1,17 @@
 //Author: Jose Garcia
 //Program: joseG.cpp
-//Purpose: This program is the background of our project
+//Purpose: This program will render the background/foreground of our project
 //
 
+#ifndef MISSILECOMMAND_H
+#define MISSILECOMMAND_H
 #include "missileCommand.h"
-// JBC comment to avoid redefinition compilation errors
-//struct Vect {
-//        float x, y, z;
-//};
-//
-//struct Shape {
-//        float width, height;
-//        float radius;
-//        Vect center;
-//};
-//
-//struct Structures {
-//        Shape floor;
-//        Shape city;
-//};
+#endif
+
+#ifndef _JOSEG_H_
+#define _JOSEG_H_
+using namespace std;
 
 extern void renderStruc(Structures *shape);
+
+#endif
