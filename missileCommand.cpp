@@ -16,6 +16,9 @@
 #include "danielT.h"
 #include "joseR.h"
 #include "joseG.h"
+extern "C" {
+	#include "fonts.h"
+}
 
 //X Windows variables
 Display *dpy;
@@ -48,7 +51,10 @@ int main(void)
 	game.box.height = 10;
 	game.box.center.x = 120 + 5*65;
 	game.box.center.y = 500 - 5*60;
-
+	//DT
+	createEMissiles(&game);
+	//JR - Menu Object Shapes and Locations
+	drawMenu(&game);
 	//start animation
 	while(!done) {
 		while(XPending(dpy)) {
@@ -119,6 +125,9 @@ void init_opengl(void)
 	glOrtho(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, -1, 1);
 	//Set the screen background color
 	glClearColor(0.1, 0.1, 0.1, 1.0);
+	//Initialize Fonts
+	glEnable(GL_TEXTURE_2D);
+	initialize_fonts();
 }
 
 void makeParticle(Game *game, int x, int y) {
@@ -148,12 +157,14 @@ void check_mouse(XEvent *e, Game *game)
 			//Left button was pressed
 			int y = WINDOW_HEIGHT - e->xbutton.y;
 			makeParticle(game, e->xbutton.x, y);
-                        changeTitle();
+			//JR
+			menuClick(game);
+			changeTitle();
 			return;
 		}
 		if (e->xbutton.button==3) {
 			//Right button was pressed
-                        fireDefenseMissile();
+			fireDefenseMissile();
 			return;
 		}
 	}
@@ -165,8 +176,8 @@ void check_mouse(XEvent *e, Game *game)
 			return;
 		int y = WINDOW_HEIGHT - e->xbutton.y;
 		makeParticle(game, e->xbutton.x, y);
-
-
+		//JR	
+		mouseOver(savex, y, game);
 	}
 }
 
@@ -179,9 +190,15 @@ int check_keys(XEvent *e, Game *game)
 			return 1;
 		}
 		//You may check other keys here.
-
 	}
-	return 0;
+	//JR: Check if exit button was clicked
+	// This is a temp work around for my exit code and should
+	// NOT interfere with anyone elses code or main functions
+	if (game->menuExit == 1){
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 void movement(Game *game, Structures *sh)
@@ -256,4 +273,9 @@ void render(Game *game)
 		glEnd();
 		glPopMatrix();
 	}
+	//DT
+	renderEMissiles(game);
+	//JR - Render Menu and Text
+	renderMenuObjects(game);
+	renderMenuText(game);
 }
