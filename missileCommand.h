@@ -63,6 +63,8 @@ struct Shape {
   
 struct Particle {
 	Shape s;
+	Shape s2;
+	Shape s3;
 	Vec velocity;
 };
 
