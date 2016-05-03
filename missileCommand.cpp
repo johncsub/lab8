@@ -1,15 +1,8 @@
-//cs335 Spring 2015 Lab-1
-//This program demonstrates the use of OpenGL and XWindows
-//
-//Assignment is to modify this program.
-//You will follow along with your instructor.
-//
+//Author: Jose Garcia, John B. Crossley, Daniel Turack, Jose Reyes
+//Program: missileCommand.cpp
+//Purpose: This program is the main of our project
+//Modified: 5/2/16
 
-// commented out by JBC AGAIN!
-// #include "danielt.h"
-
-
-//
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -22,27 +15,12 @@
 #include "johnBC.h"
 #include "danielT.h"
 #include "joseR.h"
-
-// JG go through this to remove the redefs
-// #include "joseG.h"
-
-
+#include "joseG.h"
 
 //X Windows variables
 Display *dpy;
 Window win;
 GLXContext glc;
-
-//Structures
-
-/*
- * These are already in main file "missileCommand"
- * Had to pull out to prevent compile errors
- 
- */
-
-
-
 
 //Function prototypes
 void initXWindows(void);
@@ -50,7 +28,7 @@ void init_opengl(void);
 void cleanupXWindows(void);
 void check_mouse(XEvent *e, Game *game);
 int check_keys(XEvent *e, Game *game);
-void movement(Game *game);
+void movement(Game *game, Structures *sh);
 void render(Game *game);
 
 
@@ -63,6 +41,7 @@ int main(void)
 	//declare game object
 	Game game;
 	game.n=0;
+	Structures sh;
 
 	//declare a box shape
 	game.box.width = 100;
@@ -78,8 +57,9 @@ int main(void)
 			check_mouse(&e, &game);
 			done = check_keys(&e, &game);
 		}
-		movement(&game);
+		movement(&game, &sh);
 		render(&game);
+		renderStruc(&sh);
 		glXSwapBuffers(dpy, win);
 	}
 	cleanupXWindows();
@@ -204,7 +184,7 @@ int check_keys(XEvent *e, Game *game)
 	return 0;
 }
 
-void movement(Game *game)
+void movement(Game *game, Structures *sh)
 {
 	Particle *p;
 
