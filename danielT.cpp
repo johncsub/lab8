@@ -1,4 +1,6 @@
 //Daniel Turack
+//Written: April 27, 2016
+//Last Modification: May 3, 2016
 //Program will control Enemy Missiles
 
 
@@ -10,27 +12,14 @@
 #include <time.h>
 #include <math.h>
 #include <X11/Xlib.h>
-//#include <X11/Xutil.h>
-//#include <GL/gl.h>
-//#include <GL/glu.h>
 #include <X11/keysym.h>
 #include <GL/glx.h>
 #include "danielT.h"
-// #include "missileCommand.h"
 
-//#include "log.h"
-//#include "ppm.h"
-//extern "C" {
-//	#include "fonts.h"
-//}
 using namespace std;
 
-/*defined types
-typedef float Flt;
-typedef float Vec[3];
-typedef Flt Matrix[4][4];*/
 
-//macros
+//macros for vectors
 #define rnd() (((double)rand())/(double)RAND_MAX)
 #define random(a) (rand()%a)
 #define VecZero(v) (v)[0]=0.0,(v)[1]=0.0,(v)[2]=0.0
@@ -41,10 +30,6 @@ typedef Flt Matrix[4][4];*/
 			     (c)[1]=(a)[1]-(b)[1]; \
 (c)[2]=(a)[2]-(b)[2]
 //constants
-const float timeslice = 1.0f;
-const float gravity = -0.2f;
-#define PI 3.141592653589793
-#define ALPHA 1
 const int MAX_EMISSILES = 10;
 
 
@@ -53,49 +38,11 @@ typedef float Flt;
 typedef Flt Matrix[4][4];
 //
 
-
-
-
- 
-
-//X Windows variables
-//Display *dpy;
-//Window win;
-//GLXContext glc;
-
-
-//Setup timers
-const double physicsRate = 1.0 / 60.0;
-const double oobillion = 1.0 / 1e9;
-extern struct timespec timeStart, timeCurrent;
-extern struct timespec timePause;
-extern double physicsCountdown;
-extern double timeSpan;
-extern double timeDiff(struct timespec *start, struct timespec *end);
-extern void timeCopy(struct timespec *dest, struct timespec *source);
-//
-
-// JBC comment to avoid  compilation errors
-//int xres=1250, yres=900;
-int newMissiles = 1;
-
-/*struct EMissile {
-    Vec pos;
-    Vec vel;
-    float color[3];
-    struct timespec time;
-    EMissile() { }
-};*/
-
-/*void renderEMissile(Game *game);
-void eMissileCollision(void);
-void createEMissiles(Game *game);*/
-
-void eMissileCollision()
+/*void eMissileCollision()
 {
     return;
-}
-
+}*/
+//initialize emeny missles from top of screen
 void createEMissiles(Game *g)
 {
 
@@ -114,6 +61,7 @@ void createEMissiles(Game *g)
     }
 }
 
+//function to be called in main render function to display enemy missiles
 void renderEMissiles(Game *g) {
     for (int i=0; i<g->nmissiles; i++) {
 	EMissile *e = &g->emarr[i];
