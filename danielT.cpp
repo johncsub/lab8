@@ -27,7 +27,7 @@ using namespace std;
 #define VecCopy(a,b) (b)[0]=(a)[0];(b)[1]=(a)[1];(b)[2]=(a)[2]
 #define VecDot(a,b)	((a)[0]*(b)[0]+(a)[1]*(b)[1]+(a)[2]*(b)[2])
 #define VecSub(a,b,c) (c)[0]=(a)[0]-(b)[0]; \
-			     (c)[1]=(a)[1]-(b)[1]; \
+(c)[1]=(a)[1]-(b)[1]; \
 (c)[2]=(a)[2]-(b)[2]
 //constants
 const int MAX_EMISSILES = 10;
@@ -42,10 +42,10 @@ typedef Flt Matrix[4][4];
 {
     return;
 }*/
+
 //initialize emeny missles from top of screen
 void createEMissiles(Game *g)
 {
-
     for (int i=0; i<MAX_EMISSILES; i++) {
 	EMissile *e = &g->emarr[g->nmissiles];
 	e->pos.y = 400;
@@ -62,7 +62,8 @@ void createEMissiles(Game *g)
 }
 
 //function to be called in main render function to display enemy missiles
-void renderEMissiles(Game *g) {
+void renderEMissiles(Game *g) 
+{
     for (int i=0; i<g->nmissiles; i++) {
 	EMissile *e = &g->emarr[i];
 	glPushMatrix();
