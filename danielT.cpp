@@ -27,7 +27,7 @@ using namespace std;
 #define VecCopy(a,b) (b)[0]=(a)[0];(b)[1]=(a)[1];(b)[2]=(a)[2]
 #define VecDot(a,b)	((a)[0]*(b)[0]+(a)[1]*(b)[1]+(a)[2]*(b)[2])
 #define VecSub(a,b,c) (c)[0]=(a)[0]-(b)[0]; \
-(c)[1]=(a)[1]-(b)[1]; \
+			     (c)[1]=(a)[1]-(b)[1]; \
 (c)[2]=(a)[2]-(b)[2]
 //constants
 const int MAX_EMISSILES = 10;
@@ -39,9 +39,9 @@ typedef Flt Matrix[4][4];
 //
 
 /*void eMissileCollision()
-{
-    return;
-}*/
+  {
+  return;
+  }*/
 
 //initialize emeny missles from top of screen
 void createEMissiles(Game *g)
@@ -68,11 +68,11 @@ void renderEMissiles(Game *g)
 	EMissile *e = &g->emarr[i];
 	glPushMatrix();
 	glColor3ub(150, 100, 230);
-        glBegin(GL_QUADS);
-        glVertex2i(e->pos.x+2, e->pos.y-2);
-        glVertex2i(e->pos.x-2, e->pos.y+2);
-        glVertex2i(e->pos.x+2, e->pos.y+2);
-        glVertex2i(e->pos.x-2, e->pos.y-2);
+	glBegin(GL_QUADS);
+	glVertex2i(e->pos.x+2, e->pos.y-2);
+	glVertex2i(e->pos.x-2, e->pos.y+2);
+	glVertex2i(e->pos.x+2, e->pos.y+2);
+	glVertex2i(e->pos.x-2, e->pos.y-2);
 	glEnd();
 	glPopMatrix();
     }
