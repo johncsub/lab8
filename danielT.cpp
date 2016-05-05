@@ -49,8 +49,8 @@ void createEMissiles(Game *g)
 {
     for (int i=0; i<MAX_EMISSILES; i++) {
 	EMissile *e = &g->emarr[g->nmissiles];
-	e->pos.y = 400;
-	e->pos.x = 400;
+	e->pos.y = WINDOW_HEIGHT-1;
+	e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
 	e->pos.z = 0;
 	e->vel.y = 0.05;
 	e->vel.x = -0.02;
