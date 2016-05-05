@@ -15,6 +15,9 @@
 #include <X11/keysym.h>
 #include <GL/glx.h>
 #include "danielT.h"
+extern "C" {
+	#include "fonts.h"
+}
 
 using namespace std;
 
@@ -75,3 +78,25 @@ void renderEMissiles(Game *g)
 	glPopMatrix();
     }
 }
+
+void nameInBox(float xpoint, float ypoint)
+{
+    float w = 50.0;
+    float h = 10.0;
+    glColor3ub(100, 140, 100);
+    glPushMatrix();
+    glBegin(GL_QUADS);
+    glVertex2i(xpoint-w, ypoint-h);
+    glVertex2i(xpoint-w, ypoint+h);
+    glVertex2i(xpoint+w, ypoint+h);
+    glVertex2i(xpoint+w, ypoint-h);
+    glEnd();
+    glPopMatrix();
+    Rect r;
+    //glClear(GL_COLOR_BUFFER_BIT);
+    r.bot = ypoint - 10;
+    r.left = xpoint;
+    r.center = 10;
+    ggprint8b(&r, 16, 0x00ff0000, "Daniel Turack");
+}
+

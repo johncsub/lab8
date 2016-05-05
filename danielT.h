@@ -12,6 +12,7 @@ using namespace std;
 
 
 extern void eMissileCollision();
+extern void nameInBox(float xpoint, float ypoint);
 extern void createEMissiles(Game *game);
 extern void renderEMissiles(Game *game);
 
