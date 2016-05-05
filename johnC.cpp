@@ -1,5 +1,5 @@
 /* 
- * File:    johnBC.cpp
+ * File:    johnC.cpp
  * Author:  John B. Crossley
  * Program: missileCommand (team Project)
  * Purpose: Functions for firing Dmissiles (defense missiles) up to 
