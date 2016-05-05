@@ -39,8 +39,25 @@ typedef float Flt;
 typedef Flt Matrix[4][4];
 //
 
-/*void eMissilePhysics()
+/*void eMissilePhysics(Game *game)
   {
+  EMissile *e;
+  if (game->nmissiles <=0)
+  return;
+  for (int i=0; i<game->nmissiles; i++) {
+  e = &game->emarr[i];
+  e->pos.x += e->vel.x;
+  e->pos.y += e->vel.y;
+  
+  //no gravity needed?
+  //e->vel.y -= 0.2;
+  
+  //check for off screen
+  if (e->pos.y < 0.0) {
+  	game->emarr[i] = game->emarr[game->nmissiles-1];
+  	game->nmissiles--;
+  }
+  }
   return;
   }*/
 
