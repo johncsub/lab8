@@ -12,7 +12,7 @@
 #include <X11/keysym.h>
 #include <GL/glx.h>
 #include "missileCommand.h"
-#include "johnBC.h"
+#include "johnC.h"
 #include "danielT.h"
 #include "joseR.h"
 #include "joseG.h"

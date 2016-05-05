@@ -1,6 +1,6 @@
 
 /* 
- * File:   johnBC.h for -> johnBC.cpp
+ * File:   johnC.h for -> johnBC.cpp
  * Author:  John B. Crossley
  * Program: missileCommand (team Project)
  * Purpose: Functions for firing Dmissiles (defense missiles) up to 
@@ -13,13 +13,13 @@
 
 #endif
 
-#ifndef JOHNBC_H
-#define JOHNBC_H
+#ifndef JOHNC_H
+#define JOHNC_H
 
  void fireDefenseMissile();
  void changeTitle();
 
 
 
-#endif /* JOHNBC_H */
+#endif /* JOHNC_H */
 
