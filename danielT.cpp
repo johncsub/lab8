@@ -39,45 +39,44 @@ typedef float Flt;
 typedef Flt Matrix[4][4];
 //
 
-/*
 void eMissilePhysics(Game *game)
-  {
-  EMissile *e;
-  if (game->nmissiles <=0)
-  return;
-  for (int i=0; i<game->nmissiles; i++) {
-  e = &game->emarr[i];
-  e->pos.x += e->vel.x;
-  e->pos.y += e->vel.y;
-  
-  //no gravity needed?
-  //e->vel.y -= 0.2;
-  
-  //check for off screen
-  if (e->pos.y < 0.0) {
-  	game->emarr[i] = game->emarr[game->nmissiles-1];
-  	game->nmissiles--;
-  }
-  }
-  return;
-}
-*/
+{
+    EMissile *e;
+ 
+    if (game->nmissiles <=0)
+      	return;
+    for (int i=0; i<game->nmissiles; i++) {
+	e = &game->emarr[i];
+      	e->pos.x += e->vel.x;
+      	e->pos.y += e->vel.y;
 
-//initialize emeny missles from top of screen
+      	//no gravity needed?
+	////e->vel.y -= 0.2;
+	
+      	//check for off screen
+	if (e->pos.y < 0.0 || e->pos.x < 0.0 || e->pos.x > WINDOW_WIDTH) {
+    	    game->emarr[i] = game->emarr[game->nmissiles-1];
+    	    game->nmissiles--;
+      	}
+    }
+    return;
+}
+
+//initialize enemy missles from top of screen
 void createEMissiles(Game *g)
 {
-    for (int i=0; i<MAX_EMISSILES; i++) {
-  		EMissile *e = &g->emarr[g->nmissiles];
-  		e->pos.y = WINDOW_HEIGHT-1;
-  		e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
-  		e->pos.z = 0;
-  		e->vel.y = 0.05;
-  		e->vel.x = -0.02;
-  		e->vel.z = 0;
-  		e->color[0] = 1.0f;
-  		e->color[1] = 0.0f;
-  		e->color[2] = 1.0f;
-  		g->nmissiles++;
+    for (int i=g->nmissiles; i<MAX_EMISSILES; i++) {
+	EMissile *e = &g->emarr[g->nmissiles];
+	e->pos.y = WINDOW_HEIGHT-1;
+	e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
+	e->pos.z = 0;
+	e->vel.y = -1.0;
+	e->vel.x = (i-(MAX_EMISSILES/2))*0.1;
+	e->vel.z = 0;
+	e->color[0] = 1.0f;
+	e->color[1] = 0.0f;
+	e->color[2] = 1.0f;
+	g->nmissiles++;
     }
 }
 
@@ -85,16 +84,16 @@ void createEMissiles(Game *g)
 void renderEMissiles(Game *g) 
 {
     for (int i=0; i<g->nmissiles; i++) {
-		EMissile *e = &g->emarr[i];
-		glPushMatrix();
-		glColor3ub(150, 100, 230);
-        glBegin(GL_QUADS);
-        glVertex2i(e->pos.x+2, e->pos.y-2);
-        glVertex2i(e->pos.x-2, e->pos.y+2);
-        glVertex2i(e->pos.x+2, e->pos.y+2);
-        glVertex2i(e->pos.x-2, e->pos.y-2);
-		glEnd();
-		glPopMatrix();
+	EMissile *e = &g->emarr[i];
+	glPushMatrix();
+	glColor3ub(150, 100, 230);
+	glBegin(GL_QUADS);
+	glVertex2i(e->pos.x-2, e->pos.y-5);
+	glVertex2i(e->pos.x-2, e->pos.y+5);
+	glVertex2i(e->pos.x+2, e->pos.y+5);
+	glVertex2i(e->pos.x+2, e->pos.y-5);
+	glEnd();
+	glPopMatrix();
     }
 }
 

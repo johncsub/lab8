@@ -213,6 +213,8 @@ int check_keys(XEvent *e, Game *game)
 
 void movement(Game *game, Structures *sh)
 {
+	eMissilePhysics(game);
+	
 	Particle *p;
 
 	if (game->n <= 0)
@@ -268,6 +270,9 @@ void render(Game *game)
 	}
 	//DT
 	renderEMissiles(game);
+	if (game->nmissiles < 10) {
+		createEMissiles(game);
+	}
 	//JR - Render Menu and Text
 	renderMenuObjects(game);
 	renderMenuText(game);
