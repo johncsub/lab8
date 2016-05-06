@@ -18,7 +18,5 @@
 
  void fireDefenseMissile();
  void changeTitle();
- void renderJBCMenuText(Game *game);
- void renderJBCMenuObjects(Game *game);         
 #endif /* JOHNC_H */
 
