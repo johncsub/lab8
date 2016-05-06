@@ -1,10 +1,11 @@
 # cs335 missileCommand Project
-# to compile your project, type make and press enter
+# to compile the project, type make and press enter
+# JBC Added "-g" to compile line to add debugging info 5/5/16
 
 all: missileCommand
 
 missileCommand:  missileCommand.cpp johnC.cpp danielT.cpp joseR.cpp joseG.cpp
-	g++   missileCommand.cpp johnC.cpp danielT.cpp joseR.cpp joseG.cpp libggfonts.a -Wall -lX11 -lGL -lGLU -lm -omissileCommandMain
+	g++ -g missileCommand.cpp johnC.cpp danielT.cpp joseR.cpp joseG.cpp libggfonts.a -Wall -lX11 -lGL -lGLU -lm -omissileCommandMain
 
 clean:
 	rm -f missileCommand
