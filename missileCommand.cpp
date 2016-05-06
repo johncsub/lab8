@@ -79,13 +79,15 @@ void set_title(void)
 	XStoreName(dpy, win, "335 Lab1   LMB for particle");
 }
 
-void cleanupXWindows(void) {
+void cleanupXWindows(void) 
+{
 	//do not change
 	XDestroyWindow(dpy, win);
 	XCloseDisplay(dpy);
 }
 
-void initXWindows(void) {
+void initXWindows(void) 
+{
 	//do not change
 	GLint att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None };
 	int w=WINDOW_WIDTH, h=WINDOW_HEIGHT;
@@ -130,7 +132,8 @@ void init_opengl(void)
 	initialize_fonts();
 }
 
-void makeParticle(Game *game, int x, int y) {
+void makeParticle(Game *game, int x, int y) 
+{
 	if (game->n >= MAX_PARTICLES)
 		return;
 	//std::cout << "makeParticle()" << x << " " << y << std::endl;
@@ -223,7 +226,7 @@ void movement(Game *game, Structures *sh)
 		    p->s.center.y <= s->center.y + (s->height) &&
 		    p->s.center.x >= s->center.x - (s->width) &&
 		    p->s.center.x <= s->center.x + (s->width)) {
-			p->velocity.y *= -1.0;
+				p->velocity.y *= -1.0;
 		}
 
 		//check for off-screen
