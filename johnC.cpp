@@ -21,9 +21,6 @@
 #include <GL/glx.h>
 #include "missileCommand.h"
 
-
-
-
 using namespace std;
 
 /*
@@ -32,14 +29,10 @@ using namespace std;
 void changeTitle() 
 {
     XStoreName(dpy, win, "335 Lab1 JBC Changed LMB for particle");
-
-    
 }
 
 void fireDefenseMissile() 
 {
     XStoreName(dpy, win, "Missile Fired");
     std::cout << "JBC Missile Fired" << std::endl;
-
-    
 }
