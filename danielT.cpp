@@ -67,17 +67,17 @@ void eMissilePhysics(Game *game)
 void createEMissiles(Game *g)
 {
     for (int i=0; i<MAX_EMISSILES; i++) {
-		EMissile *e = &g->emarr[g->nmissiles];
-		e->pos.y = WINDOW_HEIGHT-1;
-		e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
-		e->pos.z = 0;
-		e->vel.y = 0.05;
-		e->vel.x = -0.02;
-		e->vel.z = 0;
-		e->color[0] = 1.0f;
-		e->color[1] = 0.0f;
-		e->color[2] = 1.0f;
-		g->nmissiles++;
+  		EMissile *e = &g->emarr[g->nmissiles];
+  		e->pos.y = WINDOW_HEIGHT-1;
+  		e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
+  		e->pos.z = 0;
+  		e->vel.y = 0.05;
+  		e->vel.x = -0.02;
+  		e->vel.z = 0;
+  		e->color[0] = 1.0f;
+  		e->color[1] = 0.0f;
+  		e->color[2] = 1.0f;
+  		g->nmissiles++;
     }
 }
 
