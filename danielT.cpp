@@ -70,8 +70,8 @@ void createEMissiles(Game *g)
 	e->pos.y = WINDOW_HEIGHT-1;
 	e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
 	e->pos.z = 0;
-	e->vel.y = 0.05;
-	e->vel.x = -0.02;
+	e->vel.y = -0.5;
+	e->vel.x = -0.2;
 	e->vel.z = 0;
 	e->color[0] = 1.0f;
 	e->color[1] = 0.0f;
