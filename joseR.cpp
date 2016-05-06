@@ -43,19 +43,16 @@ void renderMenuObjects(Game *game)
 		if (game->mouseOnButton[i] == 1) {
 			//Button selected color
 			glColor3ub(190,190,190);
-		} else {
-			//Button default color
-			glColor3ub(128,128,128);
 		}
 		glPushMatrix();
 		glTranslatef(s->center.x, s->center.y, s->center.z);
 		w = s->width;
 		h = s->height;
 		glBegin(GL_QUADS);
-		glVertex2i(-w,-h);
-		glVertex2i(-w, h);
-		glVertex2i( w, h);
-		glVertex2i( w,-h);
+			glVertex2i(-w,-h);
+			glVertex2i(-w, h);
+			glVertex2i( w, h);
+			glVertex2i( w,-h);
 		glEnd();
 		glPopMatrix();
 	}

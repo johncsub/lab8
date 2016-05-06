@@ -1,6 +1,6 @@
 //Author: Jose Garcia
 //Program: joseG.cpp
-//Purpose: This program is my source code for rendering shapes 
+//Purpose: This program is my source code for rendering shapes
 //that are supposed to represent the floor and cities
 //Written: 4/28/16
 //Modified: 5/2/16
@@ -8,7 +8,7 @@
 #include "joseG.h"
 #include <GL/glx.h>
 extern void init_opengl();
-void renderStruc(Structures *shape) 
+void renderStruc(Structures *shape)
 {
 	init_opengl();
         //floor shape
