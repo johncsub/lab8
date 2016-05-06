@@ -21,9 +21,8 @@ extern void init_opengl();
 
 void drawMenu(Game *game)
 {
-	for (int j = 0; j < BUTTONS; j++) {		
-		//game->buttonSpacer[j] = 650 - (j*90);
-		game->buttonSpacer[j] = 350 - (j*90);
+	for (int j = 0; j < BUTTONS; j++) {
+		game->buttonSpacer[j] = (WINDOW_HEIGHT - 200) - (j*90);
 		game->mButton[j].width = 120;
 		game->mButton[j].height = 25;
 		game->mButton[j].center.x = WINDOW_WIDTH / BUTTON_X;
@@ -38,13 +37,13 @@ void renderMenuObjects(Game *game)
 	float w, h;
 	for (int i = 0; i < BUTTONS; i++) {
 		s = &game->mButton[i];
+		glPushMatrix();
 		glColor3ub(128,128,128);
 		//Button colors based on mouse position
 		if (game->mouseOnButton[i] == 1) {
 			//Button selected color
 			glColor3ub(190,190,190);
 		}
-		glPushMatrix();
 		glTranslatef(s->center.x, s->center.y, s->center.z);
 		w = s->width;
 		h = s->height;

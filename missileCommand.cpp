@@ -244,23 +244,6 @@ void render(Game *game)
 	float w, h;
 	glClear(GL_COLOR_BUFFER_BIT);
 	//Draw shapes...
-
-	//draw box
-	Shape *s;
-	glColor3ub(90,140,90);
-	s = &game->box;
-	glPushMatrix();
-	glTranslatef(s->center.x, s->center.y, s->center.z);
-	w = s->width;
-	h = s->height;
-	glBegin(GL_QUADS);
-		glVertex2i(-w,-h);
-		glVertex2i(-w, h);
-		glVertex2i( w, h);
-		glVertex2i( w,-h);
-	glEnd();
-	glPopMatrix();
-
 	//draw all particles here
 	glPushMatrix();
 	glColor3ub(150,160,220);
