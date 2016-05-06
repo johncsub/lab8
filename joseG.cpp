@@ -3,11 +3,13 @@
 //Purpose: This program is my source code for rendering shapes
 //that are supposed to represent the floor and cities
 //Written: 4/28/16
-//Modified: 5/2/16
+//Modified: 5/6/16
 
 #include "joseG.h"
 #include <GL/glx.h>
+
 extern void init_opengl();
+
 void renderStruc(Structures *shape)
 {
 	init_opengl();
@@ -44,7 +46,6 @@ void renderStruc(Structures *shape)
         glPopMatrix();
 
         //draw cities
-        //JR: My method of drawing multiple city shapes with a for loop
         Shape *c;
         for (int i = 0; i < CITYNUM; i++) {
                 glColor3ub(87,87,87);
