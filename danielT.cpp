@@ -54,7 +54,7 @@ void eMissilePhysics(Game *game)
 	////e->vel.y -= 0.2;
 	
       	//check for off screen
-	if (e->pos.y < 0.0) {
+	if (e->pos.y < 0.0 || e->pos.x < 0.0 || e->pos.x > WINDOW_WIDTH) {
     	    game->emarr[i] = game->emarr[game->nmissiles-1];
     	    game->nmissiles--;
       	}
@@ -65,13 +65,13 @@ void eMissilePhysics(Game *game)
 //initialize enemy missles from top of screen
 void createEMissiles(Game *g)
 {
-    for (int i=0; i<MAX_EMISSILES; i++) {
+    for (int i=g->nmissiles; i<MAX_EMISSILES; i++) {
 	EMissile *e = &g->emarr[g->nmissiles];
 	e->pos.y = WINDOW_HEIGHT-1;
 	e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
 	e->pos.z = 0;
 	e->vel.y = -0.5;
-	e->vel.x = -0.2;
+	e->vel.x = (i-(MAX_EMISSILES/2))*0.1;
 	e->vel.z = 0;
 	e->color[0] = 1.0f;
 	e->color[1] = 0.0f;
@@ -88,10 +88,10 @@ void renderEMissiles(Game *g)
 	glPushMatrix();
 	glColor3ub(150, 100, 230);
 	glBegin(GL_QUADS);
-	glVertex2i(e->pos.x+2, e->pos.y-2);
+	glVertex2i(e->pos.x-2, e->pos.y-2);
 	glVertex2i(e->pos.x-2, e->pos.y+2);
 	glVertex2i(e->pos.x+2, e->pos.y+2);
-	glVertex2i(e->pos.x-2, e->pos.y-2);
+	glVertex2i(e->pos.x+2, e->pos.y-2);
 	glEnd();
 	glPopMatrix();
     }
