@@ -1,8 +1,7 @@
 //Author: Jose Garcia, John B. Crossley, Daniel Turack, Jose Reyes
 //Program: missileCommand.cpp
-//Purpose: This cpp file is the main of our project
+//Purpose: This program is the main of our project
 //Modified: 5/2/16
-//Added comment to prove I can commit several files and merge at once
 
 #include <iostream>
 #include <cstdlib>
@@ -193,12 +192,6 @@ int check_keys(XEvent *e, Game *game)
 		if (key == XK_Escape) {
 			return 1;
 		}
-                
-                // Added line for checking "z" key (just closes for now)
-		if (key == XK_z) {
-			return 1;
-		}
-
 		//You may check other keys here.
 	}
 	//JR: Check if exit button was clicked
