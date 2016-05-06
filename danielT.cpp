@@ -82,18 +82,19 @@ void createEMissiles(Game *g)
 }
 
 //function to be called in main render function to display enemy missiles
-void renderEMissiles(Game *g) {
+void renderEMissiles(Game *g) 
+{
     for (int i=0; i<g->nmissiles; i++) {
-	EMissile *e = &g->emarr[i];
-	glPushMatrix();
-	glColor3ub(150, 100, 230);
+		EMissile *e = &g->emarr[i];
+		glPushMatrix();
+		glColor3ub(150, 100, 230);
         glBegin(GL_QUADS);
         glVertex2i(e->pos.x+2, e->pos.y-2);
         glVertex2i(e->pos.x-2, e->pos.y+2);
         glVertex2i(e->pos.x+2, e->pos.y+2);
         glVertex2i(e->pos.x-2, e->pos.y-2);
-	glEnd();
-	glPopMatrix();
+		glEnd();
+		glPopMatrix();
     }
 }
 
