@@ -21,6 +21,8 @@ extern "C" {
 	#include "fonts.h"
 }
 
+int jbcXor = 0;
+
 //X Windows variables
 Display *dpy;
 Window win;
@@ -187,6 +189,7 @@ void check_mouse(XEvent *e, Game *game)
 
 int check_keys(XEvent *e, Game *game)
 {
+        
 	//Was there input from the keyboard?
 	if (e->type == KeyPress) {
 		int key = XLookupKeysym(&e->xkey, 0);
@@ -196,7 +199,10 @@ int check_keys(XEvent *e, Game *game)
                 
                 // Added line for checking "z" key (just closes for now)
 		if (key == XK_z) {
-			return 1;
+			// return 1;
+                    
+                    jbcXor ^= 1 ;
+                    
 		}
 
 		//You may check other keys here.
@@ -286,6 +292,13 @@ void render(Game *game)
 	//DT
 	renderEMissiles(game);
 	//JR - Render Menu and Text
-	renderMenuObjects(game);
-	renderMenuText(game);
+	// renderMenuObjects(game);
+	// renderMenuText(game);
+	
+        if (jbcXor) {
+            renderJBCMenuObjects(game);
+            renderJBCMenuText(game);
+            
+            
+        }
 }
