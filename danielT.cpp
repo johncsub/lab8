@@ -70,7 +70,7 @@ void createEMissiles(Game *g)
 	e->pos.y = WINDOW_HEIGHT-1;
 	e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
 	e->pos.z = 0;
-	e->vel.y = -0.5;
+	e->vel.y = -1.0;
 	e->vel.x = (i-(MAX_EMISSILES/2))*0.1;
 	e->vel.z = 0;
 	e->color[0] = 1.0f;
@@ -88,10 +88,10 @@ void renderEMissiles(Game *g)
 	glPushMatrix();
 	glColor3ub(150, 100, 230);
 	glBegin(GL_QUADS);
-	glVertex2i(e->pos.x-2, e->pos.y-2);
-	glVertex2i(e->pos.x-2, e->pos.y+2);
-	glVertex2i(e->pos.x+2, e->pos.y+2);
-	glVertex2i(e->pos.x+2, e->pos.y-2);
+	glVertex2i(e->pos.x-2, e->pos.y-5);
+	glVertex2i(e->pos.x-2, e->pos.y+5);
+	glVertex2i(e->pos.x+2, e->pos.y+5);
+	glVertex2i(e->pos.x+2, e->pos.y-5);
 	glEnd();
 	glPopMatrix();
     }
