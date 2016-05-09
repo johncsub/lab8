@@ -213,6 +213,8 @@ int check_keys(XEvent *e, Game *game)
 
 void movement(Game *game, Structures *sh)
 {
+	eMissilePhysics(game, sh);
+	
 	Particle *p;
 
 	if (game->n <= 0)
@@ -225,16 +227,6 @@ void movement(Game *game, Structures *sh)
 
 		//gravity
 		p->velocity.y -= 0.2;
-
-		//check for collision with shapes...
-		Shape *s;
-		s = &game->box;
-		if (p->s.center.y >= s->center.y - (s->height) &&
-		p->s.center.y <= s->center.y + (s->height) &&
-		p->s.center.x >= s->center.x - (s->width) &&
-		p->s.center.x <= s->center.x + (s->width)) {
-			p->velocity.y *= -1.0;
-		}
 
 		//check for off-screen
 		if (p->s.center.y < 0.0) {
@@ -251,23 +243,6 @@ void render(Game *game)
 	float w, h;
 	glClear(GL_COLOR_BUFFER_BIT);
 	//Draw shapes...
-
-	//draw box
-	Shape *s;
-	glColor3ub(90,140,90);
-	s = &game->box;
-	glPushMatrix();
-	glTranslatef(s->center.x, s->center.y, s->center.z);
-	w = s->width;
-	h = s->height;
-	glBegin(GL_QUADS);
-		glVertex2i(-w,-h);
-		glVertex2i(-w, h);
-		glVertex2i( w, h);
-		glVertex2i( w,-h);
-	glEnd();
-	glPopMatrix();
-
 	//draw all particles here
 	glPushMatrix();
 	glColor3ub(150,160,220);
@@ -285,6 +260,9 @@ void render(Game *game)
 	}
 	//DT
 	renderEMissiles(game);
+	if (game->nmissiles < 10) {
+		createEMissiles(game);
+	}
 	//JR - Render Menu and Text
 	renderMenuObjects(game);
 	renderMenuText(game);

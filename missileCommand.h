@@ -30,10 +30,11 @@
 //X Position of all buttons
 //Divides WINDOW_WIDTH by the number below
 #define BUTTON_X 4.25
-#define WINDOW_WIDTH  800
-#define WINDOW_HEIGHT 600
-//#define WINDOW_WIDTH  1024
-//#define WINDOW_HEIGHT 768
+#define CITYNUM 7
+//#define WINDOW_WIDTH  800
+//#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH  1024
+#define WINDOW_HEIGHT 768
 #define MAX_PARTICLES 2000
 #define GRAVITY 0.1
 
@@ -61,7 +62,7 @@ struct Particle {
 
 struct Structures {
         Shape floor;
-        Shape city;
+        Shape city[CITYNUM];
 }; 
 
 struct EMissile {

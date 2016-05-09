@@ -16,7 +16,7 @@
 #include <GL/glx.h>
 #include "danielT.h"
 extern "C" {
-	#include "fonts.h"
+#include "fonts.h"
 }
 
 using namespace std;
@@ -39,25 +39,39 @@ typedef float Flt;
 typedef Flt Matrix[4][4];
 //
 
-void eMissilePhysics(Game *game)
+//handles missile movement and collisions
+void eMissilePhysics(Game *game, Structures *sh)
 {
     EMissile *e;
- 
+    Shape *c;
+
     if (game->nmissiles <=0)
-      	return;
+	return;
     for (int i=0; i<game->nmissiles; i++) {
 	e = &game->emarr[i];
-      	e->pos.x += e->vel.x;
-      	e->pos.y += e->vel.y;
+	e->pos.x += e->vel.x;
+	e->pos.y += e->vel.y;
 
-      	//no gravity needed?
-	////e->vel.y -= 0.2;
-	
-      	//check for off screen
-	if (e->pos.y < 0.0 || e->pos.x < 0.0 || e->pos.x > WINDOW_WIDTH) {
-    	    game->emarr[i] = game->emarr[game->nmissiles-1];
-    	    game->nmissiles--;
-      	}
+	//check for collision with cities 
+	for (int k=0; k<CITYNUM; k++) {
+	    c = &sh->city[k];
+	    if (e->pos.y <= c->center.y+c->height && e->pos.x <= c->center.x+c->width && e->pos.x >= c->center.x-c->width) {
+		e->vel.y += 0.8;
+		//cityChange();
+	    }
+	}
+
+	//check for collision with floor
+	c = &sh->floor;
+	if (e->pos.y <= c->center.y+c->height) {
+	    e->vel.y += 0.8;
+	}
+
+	//check for off screen
+	if (e->pos.y < 0.0 || e->pos.y > WINDOW_HEIGHT || e->pos.x < 0.0 || e->pos.x > WINDOW_WIDTH) {
+	    game->emarr[i] = game->emarr[game->nmissiles-1];
+	    game->nmissiles--;
+	}
     }
     return;
 }
@@ -70,12 +84,13 @@ void createEMissiles(Game *g)
 	e->pos.y = WINDOW_HEIGHT-1;
 	e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
 	e->pos.z = 0;
-	e->vel.y = -0.5;
-	e->vel.x = (i-(MAX_EMISSILES/2))*0.1;
+	e->vel.y = -2.0;
+	e->vel.x = (rand()%100)*0.01;
+	//e->vel.x = (g->nmissiles-(MAX_EMISSILES/2))*0.5;
 	e->vel.z = 0;
-	e->color[0] = 1.0f;
-	e->color[1] = 0.0f;
-	e->color[2] = 1.0f;
+	e->color[0] = 0.0f;
+	e->color[1] = 1.0f;
+	e->color[2] = 0.0f;
 	g->nmissiles++;
     }
 }
@@ -88,10 +103,10 @@ void renderEMissiles(Game *g)
 	glPushMatrix();
 	glColor3ub(150, 100, 230);
 	glBegin(GL_QUADS);
-	glVertex2i(e->pos.x-2, e->pos.y-2);
-	glVertex2i(e->pos.x-2, e->pos.y+2);
-	glVertex2i(e->pos.x+2, e->pos.y+2);
-	glVertex2i(e->pos.x+2, e->pos.y-2);
+	glVertex2i(e->pos.x-2, e->pos.y-5);
+	glVertex2i(e->pos.x-2, e->pos.y+5);
+	glVertex2i(e->pos.x+2, e->pos.y+5);
+	glVertex2i(e->pos.x+2, e->pos.y-5);
 	glEnd();
 	glPopMatrix();
     }
