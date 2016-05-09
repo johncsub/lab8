@@ -213,7 +213,7 @@ int check_keys(XEvent *e, Game *game)
 
 void movement(Game *game, Structures *sh)
 {
-	eMissilePhysics(game);
+	eMissilePhysics(game, sh);
 	
 	Particle *p;
 
@@ -227,16 +227,6 @@ void movement(Game *game, Structures *sh)
 
 		//gravity
 		p->velocity.y -= 0.2;
-
-		//check for collision with shapes...
-		Shape *s;
-		s = &game->box;
-		if (p->s.center.y >= s->center.y - (s->height) &&
-		    p->s.center.y <= s->center.y + (s->height) &&
-		    p->s.center.x >= s->center.x - (s->width) &&
-		    p->s.center.x <= s->center.x + (s->width)) {
-				p->velocity.y *= -1.0;
-		}
 
 		//check for off-screen
 		if (p->s.center.y < 0.0) {
