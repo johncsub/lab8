@@ -51,7 +51,7 @@ void eMissilePhysics(Game *game)
       	e->pos.y += e->vel.y;
 
       	//no gravity needed?
-	////e->vel.y -= 0.2;
+	//e->vel.y -= 0.2;
 	
       	//check for off screen
 	if (e->pos.y < 0.0 || e->pos.x < 0.0 || e->pos.x > WINDOW_WIDTH) {
