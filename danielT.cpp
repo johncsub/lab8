@@ -57,6 +57,7 @@ void eMissilePhysics(Game *game, Structures *sh)
 	    c = &sh->city[k];
 	    if (e->pos.y <= c->center.y+c->height && e->pos.x <= c->center.x+c->width && e->pos.x >= c->center.x-c->width) {
 		e->vel.y += 0.8;
+		//cityChange();
 	    }
 	}
 
