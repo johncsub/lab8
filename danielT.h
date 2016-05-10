@@ -15,5 +15,8 @@ extern void eMissilePhysics(Game *game, Structures *sh);
 extern void nameInBox(float xpoint, float ypoint);
 extern void createEMissiles(Game *game);
 extern void renderEMissiles(Game *game);
+extern void eMissileExplode(Game *game, int misnum);
+extern void renderEExplosions(Game *game);
+extern void createEExplosion(Game *game, float x, float y);
 
 #endif 
