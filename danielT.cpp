@@ -99,12 +99,16 @@ void createEMissiles(Game *g)
 	e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
 	e->pos.z = 0;
 	e->vel.y = -2.0;
+	//randomize direction of missiles
 	if (rand()%2==0) { 
-	    e->vel.x = (rand()%100)*0.01;
+	    e->vel.x = (rand()%100)*0.01*e->vel.y;
 	}
 	else
-	    e->vel.x = (rand()%100)*-0.01;
-	//e->vel.x = (g->nmissiles-(MAX_EMISSILES/2))*0.5;
+	    e->vel.x = (rand()%100)*-0.01*e->vel.y;
+	//check for missiles aimed off screen
+	//angle = asin(x, sqrt(y*y+x*x));
+	//if so, reverse direction e->vel.x = e->vel.x*-1.0;
+
 	e->vel.z = 0;
 	e->color[0] = 0.0f;
 	e->color[1] = 1.0f;
