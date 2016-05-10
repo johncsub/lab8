@@ -202,11 +202,12 @@ int check_keys(XEvent *e, Game *game)
 			return 1;
 		}
                 
-                // Added line for checking "z" key (just closes for now)
+        // Added line for checking "z" key (just closes for now)
 		if (key == XK_z) {
 			return 1;
 		}
-		if (key == XK_m) {
+		//JR: Allows pause menu if play has been clicked
+		if (key == XK_m && game->inGame == 1) {
 			game->gMenu ^= 1;
 		}
 

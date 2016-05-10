@@ -13,7 +13,7 @@
 //			The play button will toggle menu code off and game code on.
 //			The settings button will cout a temp message (filler code).
 //				This is determined by the function gameState(...)
-//			Added a way of treating menu as a pseudo pause menu.
+//			Added a way of treating the menu as a pseudo pause menu.
 //				This is determined by "int inGame" in "struct Game"
 //			
 #include <GL/glx.h>
@@ -85,7 +85,11 @@ void renderMenuText(Game *game)
 	ggprint16(&rt, 16, 0x00ffffff, "Settings");
 	j++;
 	rt.bot = WINDOW_HEIGHT - game->buttonSpacer[j] - 10;
-	ggprint16(&rt, 16, 0x00ffffff, "Play");
+	if (game->inGame == 0) {
+		ggprint16(&rt, 16, 0x00ffffff, "Play");
+	} else {
+		ggprint16(&rt, 16, 0x00ffffff, "Resume");
+	}
 }
 
 void mouseOver(int savex, int savey, Game *game)
