@@ -35,7 +35,6 @@ int check_keys(XEvent *e, Game *game);
 void movement(Game *game, Structures *sh);
 void render(Game *game);
 
-
 int main(void)
 {
 	int done=0;
@@ -47,11 +46,6 @@ int main(void)
 	game.n=0;
 	Structures sh;
 
-	//declare a box shape
-	game.box.width = 100;
-	game.box.height = 10;
-	game.box.center.x = 120 + 5*65;
-	game.box.center.y = 500 - 5*60;
 	//DT
 	createEMissiles(&game);
 	//JR - Menu Object Shapes and Locations
@@ -64,8 +58,18 @@ int main(void)
 			check_mouse(&e, &game);
 			done = check_keys(&e, &game);
 		}
-		movement(&game, &sh);
-		render(&game);
+		int state = gameState(&game);
+		if (state == 1) {
+			renderMenuObjects(&game);
+			renderMenuText(&game);
+		} else if (state == 2) {
+			std::cout << "Game state was set to settings(2)\n";
+			std::cout << "Resetting state to menu(1)\n";
+			game.gMenu = 1;
+		} else {
+			movement(&game, &sh);
+			render(&game);
+		}
 		renderStruc(&sh);
 		glXSwapBuffers(dpy, win);
 	}
@@ -161,9 +165,13 @@ void check_mouse(XEvent *e, Game *game)
 			//Left button was pressed
 			int y = WINDOW_HEIGHT - e->xbutton.y;
 			makeParticle(game, e->xbutton.x, y);
-			//JR
-			menuClick(game);
-			changeTitle();
+			//JR: Will check gameState in order to call 
+			//    appropriate functions when left-clicking
+			if (gameState(game) == 1) {
+				menuClick(game);
+			} else {
+				changeTitle();
+			}
 			return;
 		}
 		if (e->xbutton.button==3) {
@@ -198,6 +206,9 @@ int check_keys(XEvent *e, Game *game)
 		if (key == XK_z) {
 			return 1;
 		}
+		if (key == XK_m) {
+			game->gMenu ^= 1;
+		}
 
 		//You may check other keys here.
 	}
@@ -230,8 +241,8 @@ void movement(Game *game, Structures *sh)
 
 		//check for off-screen
 		if (p->s.center.y < 0.0) {
-			std::cout << "off screen" << std::endl;
-                        //fireDefenseMissile();
+			//std::cout << "off screen" << std::endl;
+            //fireDefenseMissile();
 			game->particle[i] = game->particle[game->n-1];
 			game->n--;
 		}
@@ -264,6 +275,6 @@ void render(Game *game)
 		createEMissiles(game);
 	}
 	//JR - Render Menu and Text
-	renderMenuObjects(game);
-	renderMenuText(game);
+	//renderMenuObjects(game);
+	//renderMenuText(game);
 }
