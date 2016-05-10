@@ -58,6 +58,7 @@ void eMissilePhysics(Game *game, Structures *sh)
 	    if (e->pos.y <= c->center.y+c->height && e->pos.x <= c->center.x+c->width && e->pos.x >= c->center.x-c->width) {
 		e->vel.y += 0.8;
 		//cityChange();
+		eMissileExplode(game, i);
 	    }
 	}
 
@@ -65,6 +66,7 @@ void eMissilePhysics(Game *game, Structures *sh)
 	c = &sh->floor;
 	if (e->pos.y <= c->center.y+c->height) {
 	    e->vel.y += 0.8;
+	    eMissileExplode(game, i);
 	}
 
 	//check for off screen
@@ -76,6 +78,18 @@ void eMissilePhysics(Game *game, Structures *sh)
     return;
 }
 
+
+
+void eMissileExplode(Game *game, int misnum)
+{
+    EMissile *e = &game->emarr[misnum];
+    //create explosion graphic
+    createEExplosion(game, e->pos.x, e->pos.y);
+    //delete missile
+    game->emarr[misnum] = game->emarr[game->nmissiles-1];
+    game->nmissiles--;
+}
+
 //initialize enemy missles from top of screen
 void createEMissiles(Game *g)
 {
@@ -85,7 +99,11 @@ void createEMissiles(Game *g)
 	e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
 	e->pos.z = 0;
 	e->vel.y = -2.0;
-	e->vel.x = (rand()%100)*0.01;
+	if (rand()%2==0) { 
+	    e->vel.x = (rand()%100)*0.01;
+	}
+	else
+	    e->vel.x = (rand()%100)*-0.01;
 	//e->vel.x = (g->nmissiles-(MAX_EMISSILES/2))*0.5;
 	e->vel.z = 0;
 	e->color[0] = 0.0f;
@@ -95,18 +113,52 @@ void createEMissiles(Game *g)
     }
 }
 
-//function to be called in main render function to display enemy missiles
-void renderEMissiles(Game *g) 
+void createEExplosion(Game *g, float x, float y)
+{
+    EExplosion *e = &g->eearr[g->neexplosions];
+    e->pos.y = y;
+    e->pos.x = x;
+    e->pos.z = 0;
+    e->radius = 4;
+    e->color[0] = 1.0f;
+    e->color[1] = 0.0f;
+    e->color[2] = 0.0f;
+    g->neexplosions++;
+}
+
+void renderEMissiles(Game *g)
 {
     for (int i=0; i<g->nmissiles; i++) {
 	EMissile *e = &g->emarr[i];
 	glPushMatrix();
-	glColor3ub(150, 100, 230);
+	glColor3f(e->color[0], e->color[1], e->color[2]);
 	glBegin(GL_QUADS);
 	glVertex2i(e->pos.x-2, e->pos.y-5);
 	glVertex2i(e->pos.x-2, e->pos.y+5);
 	glVertex2i(e->pos.x+2, e->pos.y+5);
 	glVertex2i(e->pos.x+2, e->pos.y-5);
+	glEnd();
+	glPopMatrix();
+    }
+}
+
+//function to be called in main render function to display enemy missiles
+void renderEExplosions(Game *g) 
+{
+    int tris = 20;
+    float twicePi = 2.0f * 3.14159265359;
+    for (int i=0; i<g->neexplosions; i++) {
+	EExplosion *e = &g->eearr[i];
+	glPushMatrix();
+	glColor3f(e->color[0], e->color[1], e->color[2]);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(e->pos.x, e->pos.y);
+	for (int i=0; i<=tris; i++) {
+	    glVertex2f(
+		    e->pos.x + (e->radius * cos(i * twicePi/tris)),
+		    e->pos.y + (e->radius * sin(i * twicePi/tris))
+		    );
+	}
 	glEnd();
 	glPopMatrix();
     }
@@ -125,8 +177,7 @@ void nameInBox(float xpoint, float ypoint)
     glVertex2i(xpoint+w, ypoint-h);
     glEnd();
     glPopMatrix();
-    Rect r;
-    //glClear(GL_COLOR_BUFFER_BIT);
+    Rect r;    
     r.bot = ypoint - 10;
     r.left = xpoint;
     r.center = 10;
