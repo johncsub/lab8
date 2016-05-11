@@ -82,7 +82,6 @@ void eMissilePhysics(Game *game, Structures *sh)
 	for (int k=0; k<CITYNUM; k++) {
 	    c = &sh->city[k];
 	    if (e->pos.y <= c->center.y+c->height && e->pos.x <= c->center.x+c->width && e->pos.x >= c->center.x-c->width) {
-		e->vel.y += 0.8;
 		//cityChange();
 		eMissileExplode(game, i);
 	    }
@@ -91,14 +90,14 @@ void eMissilePhysics(Game *game, Structures *sh)
 	//check for collision with floor
 	c = &sh->floor;
 	if (e->pos.y <= c->center.y+c->height) {
-	    e->vel.y += 0.8;
 	    eMissileExplode(game, i);
 	}
 
 	//check for off screen
-	if (e->pos.y < 0.0 || e->pos.y > WINDOW_HEIGHT || e->pos.x < 0.0 || e->pos.x > WINDOW_WIDTH) {
-	    game->emarr[i] = game->emarr[game->nmissiles-1];
-	    game->nmissiles--;
+	if (e->pos.y < 0.0 || e->pos.x <= 0.0 || e->pos.x >= WINDOW_WIDTH) {
+	    eMissileExplode(game, i);
+	    //game->emarr[i] = game->emarr[game->nmissiles-1];
+	    //game->nmissiles--;
 	}
     }
     return;
@@ -133,12 +132,12 @@ void createEMissiles(Game *g)
 	else
 	    e->vel.x = (rand()%100)*-0.01*e->vel.y;
 	//check for missiles aimed off screen
-	//angle = asin(x, sqrt(y*y+x*x));
+	//e->angle = asin(e->vel.x/(sqrt(e->vel.y*e->vel.y+e->vel.x*e->vel.x)));
 	//if so, reverse direction e->vel.x = e->vel.x*-1.0;
 	mRatio = e->vel.y/e->vel.x;
 	endPt = e->pos.x + (mRatio*(WINDOW_HEIGHT/e->vel.y));
-	if (endPt >=WINDOW_WIDTH || endPt <= 0.0) {
-		e->vel.x = e->vel.x * -1.0;
+	if (endPt >=WINDOW_WIDTH-5.0 || endPt <= 5.0) {
+		e->vel.x *= -1.0;
 		e->vel.x = e->vel.x/2;
 	}
 
@@ -169,12 +168,13 @@ void renderEMissiles(Game *g)
     for (int i=0; i<g->nmissiles; i++) {
 	EMissile *e = &g->emarr[i];
 	glPushMatrix();
+	//glRotatef(e->angle, e->pos.x, e->pos.y, e->pos.z);
 	glColor3f(e->color[0], e->color[1], e->color[2]);
 	glBegin(GL_QUADS);
-	glVertex2i(e->pos.x-2, e->pos.y-5);
-	glVertex2i(e->pos.x-2, e->pos.y+5);
-	glVertex2i(e->pos.x+2, e->pos.y+5);
-	glVertex2i(e->pos.x+2, e->pos.y-5);
+	glVertex2i(e->pos.x-1, e->pos.y-6);
+	glVertex2i(e->pos.x-3, e->pos.y+6);
+	glVertex2i(e->pos.x+3, e->pos.y+6);
+	glVertex2i(e->pos.x+1, e->pos.y-6);
 	glEnd();
 	glPopMatrix();
     }
