@@ -75,6 +75,7 @@ struct EMissile {
 struct EExplosion {
     Vec pos;
     float radius;
+    float radiusInc;
     float color[3];
     EExplosion() {}
 };
