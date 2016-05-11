@@ -96,6 +96,7 @@ void eMissilePhysics(Game *game, Structures *sh)
 	//check for off screen
 	if (e->pos.y < 0.0 || e->pos.x <= 0.0 || e->pos.x >= WINDOW_WIDTH) {
 	    eMissileExplode(game, i);
+	    std::cout << "misoff" << std::endl;
 	    //game->emarr[i] = game->emarr[game->nmissiles-1];
 	    //game->nmissiles--;
 	}
