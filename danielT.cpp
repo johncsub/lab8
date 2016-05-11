@@ -1,7 +1,8 @@
 //Daniel Turack
 //Written: April 27, 2016
-//Last Modification: May 3, 2016
-//Program will control Enemy Missiles
+//Last Modification Date: May 11, 2016
+//Last Modification: Added physics for explosions
+//Program will control Enemy Missiles and the resulting collisions
 
 
 #include <iostream>
