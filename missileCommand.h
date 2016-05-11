@@ -68,10 +68,15 @@ struct Structures {
 struct EMissile {
     Vec pos;
     Vec vel;
-    float color[3];    
-    // JBC note dont know what it is so just commment for now
-    // struct timespec time;    
+    float color[3];        
     EMissile() { }
+};
+
+struct EExplosion {
+    Vec pos;
+    float radius;
+    float color[3];
+    EExplosion() {}
 };
 
 struct Game {
@@ -81,6 +86,8 @@ struct Game {
     EMissile *emarr;                                  
     int n;
     int nmissiles;
+    EExplosion *eearr;
+    int neexplosions;
     Particle particle[MAX_PARTICLES];
     //JR: This will store the values of the x-pos to be used
     //      for correct font placement on buttons
@@ -94,8 +101,10 @@ struct Game {
     //Constructor 
     Game() {
     	emarr = new EMissile[10];
+	eearr = new EExplosion[100];
     	n = 0;
     	nmissiles = 0;
+	neexplosions = 0;
         menuExit = 0;
         gMenu = 1;
         inGame = 0;
@@ -103,6 +112,7 @@ struct Game {
     //Deconstructor
     ~Game() {
 	   delete [] emarr;
+	   delete [] eearr;
     }    
 };
 

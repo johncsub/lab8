@@ -275,6 +275,7 @@ void render(Game *game)
 	if (game->nmissiles < 10) {
 		createEMissiles(game);
 	}
+	renderEExplosions(game);
 	//JR - Render Menu and Text
 	//renderMenuObjects(game);
 	//renderMenuText(game);
