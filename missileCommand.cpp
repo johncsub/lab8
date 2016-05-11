@@ -110,6 +110,8 @@ void initXWindows(void)
 	Colormap cmap = XCreateColormap(dpy, root, vi->visual, AllocNone);
 	XSetWindowAttributes swa;
 	swa.colormap = cmap;
+	
+	
 	swa.event_mask = ExposureMask | KeyPressMask | KeyReleaseMask |
 		ButtonPress | ButtonReleaseMask |
 		PointerMotionMask |
