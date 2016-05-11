@@ -36,5 +36,5 @@ void changeTitle()
 void fireDefenseMissile() 
 {
     XStoreName(dpy, win, "Missile Fired");
-    std::cout << "JBC Missile Fired" << std::endl;
+    std::cout << "JBC Missile Fired up" << std::endl;
 }
