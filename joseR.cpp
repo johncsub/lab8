@@ -24,7 +24,6 @@ extern "C" {
 }
 
 extern void init_opengl();
-//extern int gMenu;
 
 void drawMenu(Game *game)
 {
@@ -39,7 +38,6 @@ void drawMenu(Game *game)
 
 void renderMenuObjects(Game *game)
 {
-	//init_opengl();
 	Shape *s;
 	//Check if game is in progress so menu can act as a pause menu.
 	//Otherwise will clear screen
@@ -79,7 +77,7 @@ void renderMenuText(Game *game)
 	rt.left = WINDOW_WIDTH / BUTTON_X;
 	//std::cout << rt.bot << " " << rt.left << std::endl;
 	rt.center = 1;
-	ggprint16(&rt, 16, 0x00ffffff, "Exit");
+	ggprint16(&rt, 16, 0x00ffffff, "Quit");
 	j++;
 	rt.bot = WINDOW_HEIGHT - game->buttonSpacer[j] - 10;
 	ggprint16(&rt, 16, 0x00ffffff, "Settings");
