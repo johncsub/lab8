@@ -39,6 +39,37 @@ typedef float Flt;
 typedef Flt Matrix[4][4];
 //
 
+//handles missile explosion physics
+void eExplosionPhysics(Game *game)
+{
+	EExplosion *e;
+	
+	if (game->neexplosions <=0) {
+		return;
+	}
+	for (int m=0; m<game->neexplosions; m++) {
+		e = &game->eearr[m];
+		e->radius += e->radiusInc;
+		if (fmod(e->radius,2)==0){
+			e->color[0] = 1.0;
+			e->color[1] = 0.0;
+			e->color[2] = 0.0;
+		}
+		else {
+			e->color[0] = 1.0;
+			e->color[1] = 0.5;
+			e->color[2] = 0.5;
+		}
+		if (e->radius >= 80.0) {
+			e->radiusInc *= -1.0;
+		}
+		if (e->radius <= 0.0) {
+			game->eearr[m] = game->eearr[game->neexplosions-1];
+			game->neexplosions--;	
+		}
+	}
+}
+
 //handles missile movement and collisions
 void eMissilePhysics(Game *game, Structures *sh)
 {
@@ -98,7 +129,7 @@ void createEMissiles(Game *g)
 	e->pos.y = WINDOW_HEIGHT-1;
 	e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
 	e->pos.z = 0;
-	e->vel.y = -2.0;
+	e->vel.y = -1.0;
 	//randomize direction of missiles
 	if (rand()%2==0) { 
 	    e->vel.x = (rand()%100)*0.01*e->vel.y;
@@ -108,6 +139,11 @@ void createEMissiles(Game *g)
 	//check for missiles aimed off screen
 	//angle = asin(x, sqrt(y*y+x*x));
 	//if so, reverse direction e->vel.x = e->vel.x*-1.0;
+	float mRatio = e->vel.x/e->vel.y;
+	float endPt = e->pos.x + (mRatio*e->pos.y);
+	if (endPt >=WINDOW_WIDTH || endPt <= 0.0) {
+		e->vel.x = e->vel.x * -1.0;
+	}
 
 	e->vel.z = 0;
 	e->color[0] = 0.0f;
@@ -124,6 +160,7 @@ void createEExplosion(Game *g, float x, float y)
     e->pos.x = x;
     e->pos.z = 0;
     e->radius = 4;
+    e->radiusInc = 0.1;
     e->color[0] = 1.0f;
     e->color[1] = 0.0f;
     e->color[2] = 0.0f;
