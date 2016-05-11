@@ -51,17 +51,11 @@ void eExplosionPhysics(Game *game)
 	for (int m=0; m<game->neexplosions; m++) {
 		e = &game->eearr[m];
 		e->radius += e->radiusInc;
-		if (fmod(e->radius,2)==0){
-			e->color[0] = 1.0;
-			e->color[1] = 0.0;
-			e->color[2] = 0.0;
-		}
-		else {
-			e->color[0] = 1.0;
-			e->color[1] = 0.5;
-			e->color[2] = 0.5;
-		}
-		if (e->radius >= 80.0) {
+		e->color[0] *= -1.0;
+		e->color[1] = 0.1;
+		e->color[2] = 0.1;
+		
+		if (e->radius >= 50.0) {
 			e->radiusInc *= -1.0;
 		}
 		if (e->radius <= 0.0) {
@@ -125,12 +119,13 @@ void eMissileExplode(Game *game, int misnum)
 //initialize enemy missles from top of screen
 void createEMissiles(Game *g)
 {
+    float mRatio, endPt;
     for (int i=g->nmissiles; i<MAX_EMISSILES; i++) {
 	EMissile *e = &g->emarr[g->nmissiles];
 	e->pos.y = WINDOW_HEIGHT-1;
 	e->pos.x = WINDOW_WIDTH-(rand()%WINDOW_WIDTH);
 	e->pos.z = 0;
-	e->vel.y = -1.0;
+	e->vel.y = -2.0;
 	//randomize direction of missiles
 	if (rand()%2==0) { 
 	    e->vel.x = (rand()%100)*0.01*e->vel.y;
@@ -140,10 +135,11 @@ void createEMissiles(Game *g)
 	//check for missiles aimed off screen
 	//angle = asin(x, sqrt(y*y+x*x));
 	//if so, reverse direction e->vel.x = e->vel.x*-1.0;
-	float mRatio = e->vel.x/e->vel.y;
-	float endPt = e->pos.x + (mRatio*e->pos.y);
+	mRatio = e->vel.y/e->vel.x;
+	endPt = e->pos.x + (mRatio*(WINDOW_HEIGHT/e->vel.y));
 	if (endPt >=WINDOW_WIDTH || endPt <= 0.0) {
 		e->vel.x = e->vel.x * -1.0;
+		e->vel.x = e->vel.x/2;
 	}
 
 	e->vel.z = 0;
@@ -160,8 +156,8 @@ void createEExplosion(Game *g, float x, float y)
     e->pos.y = y;
     e->pos.x = x;
     e->pos.z = 0;
-    e->radius = 4;
-    e->radiusInc = 0.1;
+    e->radius = 4.0;
+    e->radiusInc = 0.5;
     e->color[0] = 1.0f;
     e->color[1] = 0.0f;
     e->color[2] = 0.0f;
