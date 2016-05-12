@@ -216,6 +216,7 @@ int check_keys(XEvent *e, Game *game)
 void movement(Game *game, Structures *sh)
 {
 	eMissilePhysics(game, sh);
+	eExplosionPhysics(game);
 	
 	Particle *p;
 
