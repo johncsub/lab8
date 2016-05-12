@@ -110,12 +110,11 @@ void initXWindows(void)
 	Colormap cmap = XCreateColormap(dpy, root, vi->visual, AllocNone);
 	XSetWindowAttributes swa;
 	swa.colormap = cmap;
-	
-	
+        // JBC just moved code over <- to stay with the "80 lines" requirement
 	swa.event_mask = ExposureMask | KeyPressMask | KeyReleaseMask |
-		ButtonPress | ButtonReleaseMask |
-		PointerMotionMask |
-		StructureNotifyMask | SubstructureNotifyMask;
+			ButtonPress | ButtonReleaseMask |
+			PointerMotionMask |
+			StructureNotifyMask | SubstructureNotifyMask;
 	win = XCreateWindow(dpy, root, 0, 0, w, h, 0, vi->depth,
 					InputOutput, vi->visual, CWColormap | CWEventMask, &swa);
 	set_title();

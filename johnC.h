@@ -6,7 +6,7 @@
  * Purpose: Functions for firing Dmissiles (defense missiles) up to 
  *          destroy/Stop Emissiles (Enemy Missiles)
  *      
- *          Removed empty lines 5/5/16
+ *         
  */
 
 #ifndef MISSILECOMMAND_H
