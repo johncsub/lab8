@@ -12,7 +12,6 @@ extern void init_opengl();
 
 void renderStruc(Structures *shape)
 {
-	init_opengl();
         //floor shape
         shape->floor.width = WINDOW_WIDTH;
         shape->floor.height = 50;

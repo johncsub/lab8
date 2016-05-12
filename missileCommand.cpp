@@ -55,7 +55,7 @@ int main(void)
 		while(XPending(dpy)) {
 			XEvent e;
 			XNextEvent(dpy, &e);
-			check_mouse(&e, &game);
+			//check_mouse(&e, &game);
 			done = check_keys(&e, &game);
 		}
 		int state = gameState(&game);

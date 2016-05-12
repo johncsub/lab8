@@ -103,13 +103,16 @@ struct Game {
     //Constructor 
     Game() {
     	emarr = new EMissile[10];
-	eearr = new EExplosion[100];
+        eearr = new EExplosion[100];
     	n = 0;
     	nmissiles = 0;
-	neexplosions = 0;
+        neexplosions = 0;
         menuExit = 0;
         gMenu = 1;
         inGame = 0;
+        for (int i=0;i<BUTTONS;i++) {
+            mouseOnButton[i] = 0;
+        }
     }
     //Deconstructor
     ~Game() {
