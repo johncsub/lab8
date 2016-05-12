@@ -68,13 +68,15 @@ struct Structures {
 struct EMissile {
     Vec pos;
     Vec vel;
+    float angle;
     float color[3];        
     EMissile() { }
 };
 
 struct EExplosion {
     Vec pos;
-    float radius;
+    float radius; 
+    float radiusInc;
     float color[3];
     EExplosion() {}
 };

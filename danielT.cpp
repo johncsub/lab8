@@ -1,7 +1,8 @@
 //Daniel Turack
 //Written: April 27, 2016
-//Last Modification: May 3, 2016
-//Program will control Enemy Missiles
+//Last Modification Date: May 11, 2016
+//Last Modification: Added physics for explosions
+//Program will control Enemy Missiles and the resulting collisions
 
 
 #include <iostream>
@@ -39,6 +40,31 @@ typedef float Flt;
 typedef Flt Matrix[4][4];
 //
 
+//handles missile explosion physics
+void eExplosionPhysics(Game *game)
+{
+	EExplosion *e;
+	
+	if (game->neexplosions <=0) {
+		return;
+	}
+	for (int m=0; m<game->neexplosions; m++) {
+		e = &game->eearr[m];
+		e->radius += e->radiusInc;
+		e->color[0] *= -1.0;
+		e->color[1] = 0.1;
+		e->color[2] = 0.1;
+		
+		if (e->radius >= 50.0) {
+			e->radiusInc *= -1.0;
+		}
+		if (e->radius <= 0.0) {
+			game->eearr[m] = game->eearr[game->neexplosions-1];
+			game->neexplosions--;	
+		}
+	}
+}
+
 //handles missile movement and collisions
 void eMissilePhysics(Game *game, Structures *sh)
 {
@@ -56,7 +82,6 @@ void eMissilePhysics(Game *game, Structures *sh)
 	for (int k=0; k<CITYNUM; k++) {
 	    c = &sh->city[k];
 	    if (e->pos.y <= c->center.y+c->height && e->pos.x <= c->center.x+c->width && e->pos.x >= c->center.x-c->width) {
-		e->vel.y += 0.8;
 		//cityChange();
 		eMissileExplode(game, i);
 	    }
@@ -65,14 +90,15 @@ void eMissilePhysics(Game *game, Structures *sh)
 	//check for collision with floor
 	c = &sh->floor;
 	if (e->pos.y <= c->center.y+c->height) {
-	    e->vel.y += 0.8;
 	    eMissileExplode(game, i);
 	}
 
 	//check for off screen
-	if (e->pos.y < 0.0 || e->pos.y > WINDOW_HEIGHT || e->pos.x < 0.0 || e->pos.x > WINDOW_WIDTH) {
-	    game->emarr[i] = game->emarr[game->nmissiles-1];
-	    game->nmissiles--;
+	if (e->pos.y < 0.0 || e->pos.x <= 0.0 || e->pos.x >= WINDOW_WIDTH) {
+	    eMissileExplode(game, i);
+	    std::cout << "misoff" << std::endl;
+	    //game->emarr[i] = game->emarr[game->nmissiles-1];
+	    //game->nmissiles--;
 	}
     }
     return;
@@ -93,6 +119,7 @@ void eMissileExplode(Game *game, int misnum)
 //initialize enemy missles from top of screen
 void createEMissiles(Game *g)
 {
+    float mRatio, endPt;
     for (int i=g->nmissiles; i<MAX_EMISSILES; i++) {
 	EMissile *e = &g->emarr[g->nmissiles];
 	e->pos.y = WINDOW_HEIGHT-1;
@@ -106,8 +133,14 @@ void createEMissiles(Game *g)
 	else
 	    e->vel.x = (rand()%100)*-0.01*e->vel.y;
 	//check for missiles aimed off screen
-	//angle = asin(x, sqrt(y*y+x*x));
+	//e->angle = asin(e->vel.x/(sqrt(e->vel.y*e->vel.y+e->vel.x*e->vel.x)));
 	//if so, reverse direction e->vel.x = e->vel.x*-1.0;
+	mRatio = e->vel.y/e->vel.x;
+	endPt = e->pos.x + (mRatio*(WINDOW_HEIGHT/e->vel.y));
+	if (endPt >=WINDOW_WIDTH-5.0 || endPt <= 5.0) {
+		e->vel.x *= -1.0;
+		e->vel.x = e->vel.x/2;
+	}
 
 	e->vel.z = 0;
 	e->color[0] = 0.0f;
@@ -123,7 +156,8 @@ void createEExplosion(Game *g, float x, float y)
     e->pos.y = y;
     e->pos.x = x;
     e->pos.z = 0;
-    e->radius = 4;
+    e->radius = 4.0;
+    e->radiusInc = 0.5;
     e->color[0] = 1.0f;
     e->color[1] = 0.0f;
     e->color[2] = 0.0f;
@@ -135,12 +169,13 @@ void renderEMissiles(Game *g)
     for (int i=0; i<g->nmissiles; i++) {
 	EMissile *e = &g->emarr[i];
 	glPushMatrix();
+	//glRotatef(e->angle, e->pos.x, e->pos.y, e->pos.z);
 	glColor3f(e->color[0], e->color[1], e->color[2]);
 	glBegin(GL_QUADS);
-	glVertex2i(e->pos.x-2, e->pos.y-5);
-	glVertex2i(e->pos.x-2, e->pos.y+5);
-	glVertex2i(e->pos.x+2, e->pos.y+5);
-	glVertex2i(e->pos.x+2, e->pos.y-5);
+	glVertex2i(e->pos.x-1, e->pos.y-6);
+	glVertex2i(e->pos.x-3, e->pos.y+6);
+	glVertex2i(e->pos.x+3, e->pos.y+6);
+	glVertex2i(e->pos.x+1, e->pos.y-6);
 	glEnd();
 	glPopMatrix();
     }
