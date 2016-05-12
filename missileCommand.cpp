@@ -55,7 +55,7 @@ int main(void)
 		while(XPending(dpy)) {
 			XEvent e;
 			XNextEvent(dpy, &e);
-			//check_mouse(&e, &game);
+			check_mouse(&e, &game);
 			done = check_keys(&e, &game);
 		}
 		int state = gameState(&game);
@@ -227,7 +227,6 @@ int check_keys(XEvent *e, Game *game)
 void movement(Game *game, Structures *sh)
 {
 	eMissilePhysics(game, sh);
-	eExplosionPhysics(game);
 	
 	Particle *p;
 
