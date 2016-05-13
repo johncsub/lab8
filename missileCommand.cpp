@@ -162,22 +162,28 @@ void check_mouse(XEvent *e, Game *game)
 		return;
 	}
 	if (e->type == ButtonPress) {
+		//LEFT-CLICK
 		if (e->xbutton.button==1) {
 			//Left button was pressed
 			int y = WINDOW_HEIGHT - e->xbutton.y;
-			makeParticle(game, e->xbutton.x, y);
-			//JR: Will check gameState in order to call 
-			//    appropriate functions when left-clicking
+			//Check game state when LEFT-clicking
 			if (gameState(game) == 1) {
 				menuClick(game);
 			} else {
 				changeTitle();
+				makeParticle(game, e->xbutton.x, y);
 			}
 			return;
 		}
+		//RIGHT-CLICK
 		if (e->xbutton.button==3) {
-			//Right button was pressed
-			fireDefenseMissile();
+			//Check game state when RIGHT-clicking
+			if (gameState(game) == 1) {
+				//Menu functions
+			} else if (gameState(game) == 0) {
+				//Game Functions
+				fireDefenseMissile();
+			}
 			return;
 		}
 	}
@@ -185,12 +191,16 @@ void check_mouse(XEvent *e, Game *game)
 	if (savex != e->xbutton.x || savey != e->xbutton.y) {
 		savex = e->xbutton.x;
 		savey = e->xbutton.y;
+		int y = WINDOW_HEIGHT - e->xbutton.y;
 		if (++n < 10)
 			return;
-		int y = WINDOW_HEIGHT - e->xbutton.y;
-		makeParticle(game, e->xbutton.x, y);
-		//JR	
-		mouseOver(savex, y, game);
+		if (gameState(game) == 1) {
+			//Menu Functions
+			mouseOver(savex, y, game);
+		} else if (gameState(game) == 0) {
+			//Game Functions
+			makeParticle(game, e->xbutton.x, y);
+		}
 	}
 }
 
@@ -278,7 +288,4 @@ void render(Game *game)
 		createEMissiles(game);
 	}
 	renderEExplosions(game);
-	//JR - Render Menu and Text
-	//renderMenuObjects(game);
-	//renderMenuText(game);
 }
