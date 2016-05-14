@@ -274,26 +274,28 @@ void movement(Game *game, Structures *sh)
 
 void render(Game *game)
 {
-	float w, h;
+//	float w, h;
 	glClear(GL_COLOR_BUFFER_BIT);
 	//Draw shapes...
 	//draw all dMissiles here
 	glPushMatrix();
 	glColor3ub(150,160,220);
         
-        // JBC temp comment
-	for (int i=0; i<game->n; i++) {
-		Vec *c = &game->dMissile[i].s.center;
-		w = 2;
-		h = 2;
-		glBegin(GL_QUADS);
-			glVertex2i(c->x-w, c->y-h);
-			glVertex2i(c->x-w, c->y+h);
-			glVertex2i(c->x+w, c->y+h);
-			glVertex2i(c->x+w, c->y-h);
-		glEnd();
-		glPopMatrix();
-	}
+//        // JBC temp comment
+//	for (int i=0; i<game->n; i++) {
+//		Vec *c = &game->dMissile[i].s.center;
+//		w = 2;
+//		h = 2;
+//		glBegin(GL_QUADS);
+//			glVertex2i(c->x-w, c->y-h);
+//			glVertex2i(c->x-w, c->y+h);
+//			glVertex2i(c->x+w, c->y+h);
+//			glVertex2i(c->x+w, c->y-h);
+//		glEnd();
+//		glPopMatrix();
+//	}
+        
+        
 	//DT
 	// JBC commented out... please keep for my testing
 //        if (game->nmissiles < 10) {
