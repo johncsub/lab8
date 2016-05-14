@@ -46,7 +46,7 @@ int check_keys(XEvent *e, Game *game);
 void movement(Game *game, Structures *sh);
 
 // JBC added 5/13
-void fireDefenseMissile(Game *game);
+void renderDefenseMissile(Game *game);
 void makeDefenseMissile(Game *game, int x, int y);
 
 void render(Game *game);
@@ -203,7 +203,10 @@ void check_mouse(XEvent *e, Game *game)
 				//Menu functions
 			} else if (gameState(game) == 0) {
 				//Game Functions
-				fireDefenseMissile(game);
+				// fireDefenseMissile(game);
+                            
+                                // JBC idea to add menu pop up for right-click
+                                game->gMenu ^= 1;
 			}
 			return;
 		}
@@ -262,6 +265,7 @@ int check_keys(XEvent *e, Game *game)
 // moved the "particle" stuff out of here 
 void movement(Game *game, Structures *sh)
 {
+        // JBC temp comment to see ANYTHING
 	eMissilePhysics(game, sh);
 	eExplosionPhysics(game);
 	
@@ -294,4 +298,5 @@ void render(Game *game)
 		createEMissiles(game);
 	}
 	renderEExplosions(game);
+        renderDefenseMissile(game);
 }
