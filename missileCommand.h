@@ -35,7 +35,7 @@
 //#define WINDOW_HEIGHT 600
 #define WINDOW_WIDTH  1024
 #define WINDOW_HEIGHT 768
-#define MAX_PARTICLES 2000
+#define MAX_D_MISSILES 100
 #define GRAVITY 0.1
 
 //X Windows variables
@@ -72,11 +72,20 @@ struct Structures {
         Shape city[CITYNUM];
 }; 
 
+struct EMTrail {
+    Vec start;
+    Vec end;
+    float width;
+    float color[3];
+    EMTrail() {}
+};
+
 struct EMissile {
     Vec pos;
     Vec vel;
     float angle;
     float color[3];        
+    EMTrail trail;
     EMissile() { }
 };
 
@@ -99,7 +108,7 @@ struct Game {
     int neexplosions;
     
     // JBC 05/08/16 JBC switched from DefenseMissile to dMissile (Defense Missile)
-    DefenseMissile dMissile[MAX_PARTICLES];
+    DefenseMissile dMissile[MAX_D_MISSILES];
 
     
     //JR: This will store the values of the x-pos to be used

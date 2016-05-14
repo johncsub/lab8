@@ -158,7 +158,7 @@ void init_opengl(void)
 // moved the "particle" stuff out of here
 //void makeParticle(Game *game, int x, int y)
 //{
-//	if (game->n >= MAX_PARTICLES)
+//	if (game->n >= MAX_D_MISSILES)
 //		return;
 //	//std::cout << "makeParticle()" << x << " " << y << std::endl;
 //	//position of particle
@@ -280,6 +280,8 @@ void render(Game *game)
 	//draw all dMissiles here
 	glPushMatrix();
 	glColor3ub(150,160,220);
+        
+        // JBC temp comment
 	for (int i=0; i<game->n; i++) {
 		Vec *c = &game->dMissile[i].s.center;
 		w = 2;
@@ -293,10 +295,11 @@ void render(Game *game)
 		glPopMatrix();
 	}
 	//DT
+	// JBC commented out... please keep for my testing
+//        if (game->nmissiles < 10) {
+//		createEMissiles(game);
+//	}
 	renderEMissiles(game);
-	if (game->nmissiles < 10) {
-		createEMissiles(game);
-	}
 	renderEExplosions(game);
         renderDefenseMissile(game);
 }
