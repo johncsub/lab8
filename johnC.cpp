@@ -63,23 +63,37 @@ void changeTitle()
 // void renderDefenseMissile(Game *game, double xStart, double yStart)
 void renderDefenseMissile(Game *game)
 {
-	DefenseMissile *dMissilePtr;
+    float w, h;
+    for (int i=0; i<game->n; i++) {
+        Vec *c = &game->dMissile[i].s.center;
+        w = 2;
+        h = 2;
+        glBegin(GL_QUADS);
+            glVertex2i(c->x-w, c->y-h);
+            glVertex2i(c->x-w, c->y+h);
+            glVertex2i(c->x+w, c->y+h);
+            glVertex2i(c->x+w, c->y-h);
+        glEnd();
+        glPopMatrix();
+    }
+    DefenseMissile *dMissilePtr;
 
-	if (game->n <= 0)
-		return;
+    if (game->n <= 0)
+        return;
 
-	for (int i=0; i<game->n; i++) {
-		dMissilePtr = &game->dMissile[i];
-                
-                // s.center refers to the Shape's "s" center's position
-                // IE the position of the center of that particular Shape
-		dMissilePtr->s.center.x += dMissilePtr->velocity.x;
-		dMissilePtr->s.center.y += dMissilePtr->velocity.y;
+    for (int i=0; i<game->n; i++) {
+        dMissilePtr = &game->dMissile[i];
 
-	}
+        // s.center refers to the Shape's "s" center's position
+        // IE the position of the center of that particular Shape
+        dMissilePtr->s.center.x += dMissilePtr->velocity.x;
+        dMissilePtr->s.center.y += dMissilePtr->velocity.y;
+
+    }
 }
 
-// 5/14 Using hard coded start point of 0,0 to get angle of line/vector math
+// 5/14 changes to make missile firing work
+// seems OK now... :-)
 void makeDefenseMissile(Game *game, int x, int y)
 {
 
@@ -92,12 +106,14 @@ void makeDefenseMissile(Game *game, int x, int y)
         // set speed of missile
         // 0.5 is a good start, 0.25 seemed a bit to slow & 5.0 
         // seemed insanely fast
-        float missileSpeed = 0.5;
+        float missileSpeed = 0.75;
         
         // set start position of missile
-        /// ARGH! only 0,0 works so far!!!
-        float xStart = 0.0;
-        float yStart = 0.0;
+        // Works now @ 2pm 05/14/16
+        float xStart = 500.0;
+        float yStart = 300.0;
+        dMissilePtr->s.center.x = xStart;
+        dMissilePtr->s.center.y = yStart;
         
         // set target of missile from mouse coords
         float xMissileTarget = x;
@@ -112,7 +128,9 @@ void makeDefenseMissile(Game *game, int x, int y)
         dy /= dist;
         float missileVelocityX = 0;
         float missileVelocityY = 0;
-        missileVelocityX = xStart + missileSpeed * dx;
+
+//        missileVelocityX = xStart + missileSpeed * dx;
+        missileVelocityX = missileSpeed * dx;
         missileVelocityY = missileVelocityY + missileSpeed * dy;
 
         // Velocity is a vector quantity that refers to 
