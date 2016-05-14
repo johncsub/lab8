@@ -17,6 +17,10 @@
  *          removed the extra empty lines+ from within the functions
  *          (5/5/16)
  * 
+ *          5/13-14
+ *          Added missile firing to mouse coords from 0,0 ONLY!
+ *          Still need to make it fire from other locations
+ * 
  */
 #include <iostream>
 #include <cstdlib>
@@ -54,18 +58,11 @@ void changeTitle()
     XStoreName(dpy, win, "335 Lab1 JBC Changed Title to prove a point");
 }
 
-//void fireDefenseMissile() 
-//{
-//    XStoreName(dpy, win, "Missile Fired");
-//    std::cout << "JBC Missile Fired" << std::endl;
-//}
-
 
 // Previously called "movement"
+// void renderDefenseMissile(Game *game, double xStart, double yStart)
 void renderDefenseMissile(Game *game)
 {
-	// eMissilePhysics(game);
-	
 	DefenseMissile *dMissilePtr;
 
 	if (game->n <= 0)
@@ -79,47 +76,51 @@ void renderDefenseMissile(Game *game)
 		dMissilePtr->s.center.x += dMissilePtr->velocity.x;
 		dMissilePtr->s.center.y += dMissilePtr->velocity.y;
 
-                // JBC 5/13
-		//
-                // Velocity is a vector quantity that refers to 
-                // the rate at which an object changes its position.
-		dMissilePtr->velocity.y = .25;
-                dMissilePtr->velocity.x = .25;
-
-		//check for collision with shapes...
-		Shape *s;
-		s = &game->box;
-		if (dMissilePtr->s.center.y >= s->center.y - (s->height) &&
-		    dMissilePtr->s.center.y <= s->center.y + (s->height) &&
-		    dMissilePtr->s.center.x >= s->center.x - (s->width) &&
-		    dMissilePtr->s.center.x <= s->center.x + (s->width)) {
-				dMissilePtr->velocity.y *= -1.0;
-		}
-
-//		//check for off-screen
-//		if (dMissilePtr->s.center.y < 0.0) {
-//			std::cout << "off screen" << std::endl;
-//                        //fireDefenseMissile();
-//			game->dMissile[i] = game->dMissile[game->n-1];
-//			game->n--;
-//		}
 	}
 }
 
+// 5/14 Using hard coded start point of 0,0 to get angle of line/vector math
 void makeDefenseMissile(Game *game, int x, int y)
 {
-	if (game->n >= MAX_PARTICLES)
-		return;
+
+    if (game->n >= MAX_D_MISSILES)
+        return;
 	//std::cout << "makeDefenseMissile()" << x << " " << y << std::endl;
-	//position of dMissile
+	
 	DefenseMissile *dMissilePtr = &game->dMissile[game->n];
 
-//	dMissilePtr->s.center.x = x;
-//	dMissilePtr->s.center.y = y;
-	dMissilePtr->s.center.x = x;
-	dMissilePtr->s.center.y = y;
-	dMissilePtr->velocity.y = 0.25;
-	dMissilePtr->velocity.x = 0.25;
-	game->n++;
+        // set speed of missile
+        // 0.5 is a good start, 0.25 seemed a bit to slow & 5.0 
+        // seemed insanely fast
+        float missileSpeed = 0.5;
+        
+        // set start position of missile
+        /// ARGH! only 0,0 works so far!!!
+        float xStart = 0.0;
+        float yStart = 0.0;
+        
+        // set target of missile from mouse coords
+        float xMissileTarget = x;
+        float yMissileTarget = y;
+
+        // do the math to find X,Y coords of mouse to pass to 
+        // missile as target
+        float dx = xMissileTarget - xStart;
+        float dy = yMissileTarget - yStart;
+        float dist = sqrt(dx*dx + dy*dy);
+        dx /= dist;
+        dy /= dist;
+        float missileVelocityX = 0;
+        float missileVelocityY = 0;
+        missileVelocityX = xStart + missileSpeed * dx;
+        missileVelocityY = missileVelocityY + missileSpeed * dy;
+
+        // Velocity is a vector quantity that refers to 
+        // the rate at which an object changes its position.
+        // The diff between X & Y determines the angle
+        dMissilePtr->velocity.y = missileVelocityY;
+        dMissilePtr->velocity.x = missileVelocityX;
+
+        game->n++;
 }
 
