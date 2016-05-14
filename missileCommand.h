@@ -53,7 +53,14 @@ struct Shape {
 	Vec center;
 };
   
-struct Particle {
+// JBC 05/08/16 JBC switched from DefenseMissile to dMissile/DefenseMissile
+//struct DefenseMissile {
+//	Shape s;
+//	Shape s2;
+//	Shape s3;
+//	Vec velocity;
+//};
+struct DefenseMissile {
 	Shape s;
 	Shape s2;
 	Shape s3;
@@ -90,7 +97,11 @@ struct Game {
     int nmissiles;
     EExplosion *eearr;
     int neexplosions;
-    Particle particle[MAX_PARTICLES];
+    
+    // JBC 05/08/16 JBC switched from DefenseMissile to dMissile (Defense Missile)
+    DefenseMissile dMissile[MAX_PARTICLES];
+
+    
     //JR: This will store the values of the x-pos to be used
     //      for correct font placement on buttons
     int buttonSpacer[BUTTONS];
