@@ -62,7 +62,7 @@ void changeTitle()
 
 
 // Previously called "movement"
-void fireDefenseMissile(Game *game)
+void renderDefenseMissile(Game *game)
 {
 	// eMissilePhysics(game);
 	
@@ -73,11 +73,18 @@ void fireDefenseMissile(Game *game)
 
 	for (int i=0; i<game->n; i++) {
 		dMissilePtr = &game->dMissile[i];
+                
+                // s.center refers to the Shape's "s" center's position
+                // IE the position of the center of that particular Shape
 		dMissilePtr->s.center.x += dMissilePtr->velocity.x;
 		dMissilePtr->s.center.y += dMissilePtr->velocity.y;
 
-		//gravity
-		dMissilePtr->velocity.y -= 5;
+                // JBC 5/13
+		//
+                // Velocity is a vector quantity that refers to 
+                // the rate at which an object changes its position.
+		dMissilePtr->velocity.y = .25;
+                dMissilePtr->velocity.x = .25;
 
 		//check for collision with shapes...
 		Shape *s;
@@ -106,10 +113,13 @@ void makeDefenseMissile(Game *game, int x, int y)
 	//std::cout << "makeDefenseMissile()" << x << " " << y << std::endl;
 	//position of dMissile
 	DefenseMissile *dMissilePtr = &game->dMissile[game->n];
+
+//	dMissilePtr->s.center.x = x;
+//	dMissilePtr->s.center.y = y;
 	dMissilePtr->s.center.x = x;
 	dMissilePtr->s.center.y = y;
-	dMissilePtr->velocity.y = 5.0;
-	dMissilePtr->velocity.x =  1.0;
+	dMissilePtr->velocity.y = 0.25;
+	dMissilePtr->velocity.x = 0.25;
 	game->n++;
 }
 
