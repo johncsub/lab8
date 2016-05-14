@@ -72,11 +72,20 @@ struct Structures {
         Shape city[CITYNUM];
 }; 
 
+struct EMTrail {
+    Vec start;
+    Vec end;
+    float width;
+    float color[3];
+    EMTrail() {}
+};
+
 struct EMissile {
     Vec pos;
     Vec vel;
     float angle;
-    float color[3];        
+    float color[3];
+    EMTrail trail;
     EMissile() { }
 };
 

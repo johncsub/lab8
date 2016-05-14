@@ -294,9 +294,6 @@ void render(Game *game)
 	}
 	//DT
 	renderEMissiles(game);
-	if (game->nmissiles < 10) {
-		createEMissiles(game);
-	}
 	renderEExplosions(game);
         renderDefenseMissile(game);
 }
