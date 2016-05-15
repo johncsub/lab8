@@ -59,7 +59,7 @@ int main(void)
 	init_opengl();
 	//declare game object
 	Game game;
-	game.n=0;
+	game.numberDefenseMissiles=0;
 	Structures sh;
 
 	//DT
@@ -132,7 +132,7 @@ void initXWindows(void)
 			PointerMotionMask |
 			StructureNotifyMask | SubstructureNotifyMask;
 	win = XCreateWindow(dpy, root, 0, 0, w, h, 0, vi->depth,
-					InputOutput, vi->visual, CWColormap | CWEventMask, &swa);
+                InputOutput, vi->visual, CWColormap | CWEventMask, &swa);
 	set_title();
 	glc = glXCreateContext(dpy, vi, NULL, GL_TRUE);
 	glXMakeCurrent(dpy, win, glc);
@@ -267,6 +267,8 @@ void movement(Game *game, Structures *sh)
 {
         // JBC temp comment to see ANYTHING
 	eMissilePhysics(game, sh);
+
+	//dMissilePhysics(game, sh);
 	eExplosionPhysics(game);
 	
 	
@@ -301,7 +303,9 @@ void render(Game *game)
 //        if (game->nmissiles < 10) {
 //		createEMissiles(game);
 //	}
-	renderEMissiles(game);
+	
+        renderEMissiles(game);
 	renderEExplosions(game);
         renderDefenseMissile(game);
+        // renderDefExplosions(game);
 }

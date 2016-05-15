@@ -61,10 +61,14 @@ struct Shape {
 //	Vec velocity;
 //};
 struct DefenseMissile {
-	Shape s;
-	Shape s2;
-	Shape s3;
+	Shape shape;
+//	Shape s2;
+//	Shape s3;
+        int color[3];
 	Vec velocity;
+        int destinationX;
+        int destinationY;
+        
 };
 
 struct Structures {
@@ -97,14 +101,30 @@ struct EExplosion {
     EExplosion() {}
 };
 
+// defense missile explosion
+struct DExplosion {
+    Vec pos;
+    float radius; 
+    float radiusInc;
+    float color[3];
+    DExplosion() {}
+};
+
+
 struct Game {
     Shape box;    
     // JBC comment out
     // Particle particle[10];
     EMissile *emarr;                                  
-    int n;
+    // int numberDefenseMissiles;
+    int numberDefenseMissiles;
+
     int nmissiles;
     EExplosion *eearr;
+
+    // array of Defense missile explosions
+    DExplosion * defExplArray;
+    int numDefExplosions;
     int neexplosions;
     
     // JBC 05/08/16 JBC switched from DefenseMissile to dMissile (Defense Missile)
@@ -124,7 +144,7 @@ struct Game {
     Game() {
     	emarr = new EMissile[10];
         eearr = new EExplosion[100];
-    	n = 0;
+    	numberDefenseMissiles = 0;
     	nmissiles = 0;
         neexplosions = 0;
         menuExit = 0;
