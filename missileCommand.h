@@ -43,6 +43,8 @@ extern Display *dpy;
 extern Window win;
 extern GLXContext glc;
 
+
+
 struct Vec {
     float x, y, z;
 };
@@ -113,19 +115,17 @@ struct DExplosion {
 
 struct Game {
     Shape box;    
-    // JBC comment out
-    // Particle particle[10];
-    EMissile *emarr;                                  
-    // int numberDefenseMissiles;
-    int numberDefenseMissiles;
 
+    EMissile *emarr;                                  
     int nmissiles;
     EExplosion *eearr;
+    int neexplosions;
 
+    // DefenseMissile section
+    int numberDefenseMissiles;
     // array of Defense missile explosions
     DExplosion * defExplArray;
     int numDefExplosions;
-    int neexplosions;
     
     // JBC 05/08/16 JBC switched from DefenseMissile to dMissile (Defense Missile)
     DefenseMissile dMissile[MAX_D_MISSILES];

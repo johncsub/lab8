@@ -12,7 +12,7 @@
  * 
  *          (05/07/2016)
  *          Added "fireDefenseMissile" (used to be "movement" 
- *          inside "misileCommand.cpp")
+ *          inside "missileCommand.cpp")
  *          
  *          removed the extra empty lines+ from within the functions
  *          (5/5/16)
@@ -20,6 +20,10 @@
  *          5/13-14
  *          Added missile firing to mouse coords from 0,0 ONLY!
  *          Still need to make it fire from other locations
+ * 
+ *          5/14-15/16
+ *          added code to make defense missiles lime green and bigger
+ *          also made them stop at mouse click location
  * 
  */
 #include <iostream>
@@ -46,23 +50,20 @@
 #include "danielT.h"
 #endif
 
-
-
 using namespace std;
+extern void dMissileRemove(Game *game, int dMissilenumber);
+//extern void createEExplosion(Game *g, float x, float y,
+//        float color0, float color1, float color2);
+extern void createEExplosion(Game *game, float x, float y);
 
-extern void dMissileExplode(Game *game, int dMissilenumber);
 
-/*
- * 
- */
+// extern void createEExplosion(Game *g, float x, float y);
+
 void changeTitle() 
 {
     XStoreName(dpy, win, "335 Lab1 JBC Changed Title to prove a point");
 }
 
-
-// Previously called "movement"
-// void renderDefenseMissile(Game *game, double xStart, double yStart)
 void renderDefenseMissile(Game *game)
 {
     DefenseMissile *dMissilePtr;
@@ -75,15 +76,14 @@ void renderDefenseMissile(Game *game)
         glColor3f(game->dMissile[i].color[0],
                 game->dMissile[i].color[1], 
                 game->dMissile[i].color[2]);
-//        glColor3f(&game->dMissile[i].color[0], 
-//                    &game->dMissile[i].color[1], 
-//                    &game->dMissile[i].color[2]);
+
         glBegin(GL_QUADS);
             glVertex2i(c->x-w, c->y-h);
             glVertex2i(c->x-w, c->y+h);
             glVertex2i(c->x+w, c->y+h);
             glVertex2i(c->x+w, c->y-h);
-        glEnd();
+
+            glEnd();
         glPopMatrix();
     }
     
@@ -110,37 +110,42 @@ void renderDefenseMissile(Game *game)
             
         } else {
             // game->numberDefenseMissiles--;
-            dMissileExplode(game, i);
+            dMissileRemove(game, i);
             
         }
 
     }
 }
 
+//
+//void createDefenseMissileExplosion(Game *game, float x, float y)
+//{
+//    DExplosion * defExplosion = 
+//        &game->defExplArray[game->numDefExplosions];
+////    EExplosion *e = &g->eearr[g->neexplosions];
+//    
+//    defExplosion->pos.y = y;
+//    defExplosion->pos.x = x;
+//    defExplosion->pos.z = 0;
+//    defExplosion->radius = 4.0;
+//    defExplosion->radiusInc = 0.5;
+//    defExplosion->color[0] = 0.0f;
+//    defExplosion->color[1] = 255.0f;
+//    defExplosion->color[2] = 0.0f;
+//    
+//    // game->neexplosions++;
+//}
 
-void createDefenseMissileExplosion(Game *game, float x, float y)
+
+void dMissileRemove(Game *game, int dMissilenumber)
 {
-    DExplosion * defExplosion = 
-        &game->defExplArray[game->numDefExplosions];
-//    EExplosion *e = &g->eearr[g->neexplosions];
+    DefenseMissile *dMissilePtr = &game->dMissile[dMissilenumber];
     
-    defExplosion->pos.y = y;
-    defExplosion->pos.x = x;
-    defExplosion->pos.z = 0;
-    defExplosion->radius = 4.0;
-    defExplosion->radiusInc = 0.5;
-    defExplosion->color[0] = 0.0f;
-    defExplosion->color[1] = 255.0f;
-    defExplosion->color[2] = 0.0f;
     
-    // game->neexplosions++;
-}
+    // cant seem to make them a different color???
+    createEExplosion(game,  dMissilePtr->shape.center.x,
+                            dMissilePtr->shape.center.y);
 
-
-
-void dMissileExplode(Game *game, int dMissilenumber)
-{
-    // DefenseMissile *dMissilePtr = &game->dMissile[dMissilenumber];
     
     //delete defense missile
     game->dMissile[dMissilenumber] = 
@@ -152,30 +157,6 @@ void dMissileExplode(Game *game, int dMissilenumber)
     game->numberDefenseMissiles--;
 }
 
-//function to be called in main render function to display enemy missiles
-void renderDefExplosions(Game *game) 
-{
-    int tris = 20;
-    float twicePi = 2.0f * 3.14159265359;
-    for (int i=0; i < game->numDefExplosions; i++) {
-	DExplosion * defExplosion = &game->defExplArray[i];
-	glPushMatrix();
-	glColor3f(defExplosion->color[0], defExplosion->color[1],
-            defExplosion->color[2]);
-	glBegin(GL_TRIANGLE_FAN);
-	glVertex2f(defExplosion->pos.x, defExplosion->pos.y);
-	for (int i=0; i<=tris; i++) {
-	    glVertex2f(
-		defExplosion->pos.x + (defExplosion->radius * 
-                    cos(i * twicePi/tris)),
-		defExplosion->pos.y + (defExplosion->radius * 
-                    sin(i * twicePi/tris))
-            );
-	}
-	glEnd();
-	glPopMatrix();
-    }
-}
 
 
 // 5/14 changes to make missile firing work
