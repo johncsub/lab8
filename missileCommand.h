@@ -143,7 +143,7 @@ struct Game {
     //Constructor 
     Game() {
     	emarr = new EMissile[10];
-        eearr = new EExplosion[100];
+        eearr = new EExplosion[1000];
     	numberDefenseMissiles = 0;
     	nmissiles = 0;
         neexplosions = 0;
