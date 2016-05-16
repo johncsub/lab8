@@ -75,7 +75,7 @@ void eMissilePhysics(Game *game, Structures *sh)
 {
     EMissile *e;
     Shape *c;
-    DefenseMissile *d;
+    EExplosion *d;
 
     //if (game->nmissiles <=0)
     //	return;
@@ -108,12 +108,12 @@ void eMissilePhysics(Game *game, Structures *sh)
 	e->trail.end.y = e->pos.y;
 
 	//check for DMissile collision
-	for (int p=0; p<game->n; p++) {
-	    d = &game->dMissile[p];
-	    if (e->pos.y <= d->s.center.y+2 &&
-		    e->pos.y >= d->s.center.y-2 &&
-	      e->pos.x <= d->s.center.x+2 &&
-	     e->pos.x >= d->s.center.x-2) {
+	for (int p=0; p<game->neexplosions; p++) {
+	    d = &game->eearr[p];
+	    float xd = abs(e->pos.x-d->pos.x);
+	    float yd = abs(e->pos.y-d->pos.y);
+	    float dist = sqrt(xd*xd+yd*yd);
+	    if (dist<=d->radius) {
 		eMissileExplode(game,i);
 	    }
 	}
