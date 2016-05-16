@@ -75,6 +75,7 @@ void eMissilePhysics(Game *game, Structures *sh)
 {
     EMissile *e;
     Shape *c;
+    EExplosion *d;
 
     //if (game->nmissiles <=0)
     //	return;
@@ -105,6 +106,17 @@ void eMissilePhysics(Game *game, Structures *sh)
 	//update missile trail
 	e->trail.end.x = e->pos.x;
 	e->trail.end.y = e->pos.y;
+
+	//check for DMissile collision
+	for (int p=0; p<game->neexplosions; p++) {
+	    d = &game->eearr[p];
+	    float xd = abs(e->pos.x-d->pos.x);
+	    float yd = abs(e->pos.y-d->pos.y);
+	    float dist = sqrt(xd*xd+yd*yd);
+	    if (dist<=d->radius) {
+		eMissileExplode(game,i);
+	    }
+	}
 
 	//check for off screen
 	if (e->pos.y < 0.0 || e->pos.x <= 0.0 || e->pos.x >= WINDOW_WIDTH) {
