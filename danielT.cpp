@@ -37,7 +37,7 @@ const int MAX_EMISSILES = 10;
 int mCount=0;
 int chCount=0;
 int offCount=0;
-int level=0;
+//int level=0;
 int redirects=0;
 
 //defined types
@@ -60,8 +60,8 @@ void eExplosionPhysics(Game *game)
 	e->color[1] = 0.1;
 	e->color[2] = 0.1;
 
-	if (e->radius >= 50.0) {
-	    e->radiusInc *= -1.0;
+	if (e->radius >= 40.0) {
+	    e->radiusInc *= -1.25;
 	}
 	if (e->radius <= 0.0) {
 	    game->eearr[m] = game->eearr[game->neexplosions-1];
@@ -124,12 +124,23 @@ void eMissilePhysics(Game *game, Structures *sh)
 	    std::cout << "misoff" << std::endl;
 	    offCount++;
 	}
+	
+	//randomly generate new missile branch
+	//as long as more missiles are available
+	//only generate branches above middle of screen
+	if (rand()%100==0 && 
+		game->nmissiles<10-game->level && 
+		mCount>10-game->level &&
+		e->pos.y>WINDOW_HEIGHT/2) {
+	    for(int q=0; q<(rand()%game->level); q++) {
+		createEMissiles(game, e->pos.x, e->pos.y);
+	    }
+	}
     }
     //puts in a random delay between missile creation
-    if (rand()%40==0) {
-	if (game->nmissiles < 10) {
-	    createEMissiles(game);
-	}
+    if (game->nmissiles < 10) {
+	if (rand()%50==0)
+    	    createEMissiles(game, 0, 0);
     }
     return;
 }
@@ -147,22 +158,29 @@ void eMissileExplode(Game *game, int misnum)
 }
 
 //initialize enemy missles from top of screen
-void createEMissiles(Game *g)
+void createEMissiles(Game *g, float x, float y)
 {
     //counts down missiles in each level
     if (mCount<=0) {
 	//waits at the end of each level
 	if (g->nmissiles>0)
 	    return;
-	level++;
-	mCount=20*(level*0.75);
+	g->level++;
+	mCount=20*(g->level*0.50);
     }
     float mRatio;
     EMissile *e = &g->emarr[g->nmissiles];
-    e->pos.y = WINDOW_HEIGHT-1;
-    e->pos.x = rand()%WINDOW_WIDTH;
-    e->pos.z = 0;
-    e->vel.y = -2.0*(level*0.5);
+    if (x==0 && y==0){
+    	e->pos.y = WINDOW_HEIGHT-1;    
+	e->pos.x = (rand()%WINDOW_WIDTH-1.0) +1.0;
+    	e->pos.z = 0;
+    }
+    else {
+	e->pos.y = y;
+	e->pos.x = x;
+	e->pos.z = 0;
+    }
+    e->vel.y = -1.0*(g->level*0.5);
     //find random destination
     float tempX = rand()%WINDOW_WIDTH;
     //calculate angle using start and end points
@@ -196,6 +214,9 @@ void createEMissiles(Game *g)
 	e->trail.width = 1.5;
     else
 	e->trail.width = -1.5;
+    //make trail wider if missile angle is greater
+    if (mRatio >= 0.5)
+	e->trail.width *= -5.0*mRatio;
     e->trail.color[0] = 0.75;
     e->trail.color[1] = 0.2;
     e->trail.color[2] = 0.2;
@@ -210,7 +231,7 @@ void createEExplosion(Game *g, float x, float y)
     e->pos.x = x;
     e->pos.z = 0;
     e->radius = 4.0;
-    e->radiusInc = 0.5;
+    e->radiusInc = 0.75;
     e->color[0] = 1.0f;
     e->color[1] = 0.0f;
     e->color[2] = 0.0f;
@@ -228,9 +249,9 @@ void renderEMissiles(Game *g)
 	glColor3f(e->trail.color[0], e->trail.color[1], e->trail.color[2]);
 	glBegin(GL_QUADS);
 	glVertex2i(e->trail.start.x, e->trail.start.y);
-	glVertex2i(e->trail.start.x+w, e->trail.start.y+w);
+	glVertex2i(e->trail.start.x+w, e->trail.start.y+(w*0.5));
 	glVertex2i(e->trail.end.x, e->trail.end.y);
-	glVertex2i(e->trail.end.x+w, e->trail.end.y+w);
+	glVertex2i(e->trail.end.x+w, e->trail.end.y+(w*0.5));
 	glEnd();
 	glPopMatrix();
 
@@ -250,7 +271,7 @@ void renderEMissiles(Game *g)
     r.bot = WINDOW_HEIGHT-30;
     r.left = 50.0;
     r.center = 0;
-    ggprint8b(&r, 16, 0x00005599, "LEVEL: %i", level);
+    ggprint8b(&r, 16, 0x00005599, "LEVEL: %i", g->level);
     ggprint8b(&r, 16, 0x00005599, "Missiles Remaining: %i", mCount);
     ggprint8b(&r, 16, 0x00005599, "City Hit Count: %i", chCount);
     ggprint8b(&r, 16, 0x00005599, "Missile Miss Count: %i", offCount);
