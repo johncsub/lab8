@@ -114,6 +114,8 @@ struct DExplosion {
 
 
 struct Game {
+    int level;
+
     Shape box;    
 
     EMissile *emarr;                                  
@@ -142,6 +144,7 @@ struct Game {
     Shape mButton[BUTTONS];
     //Constructor 
     Game() {
+	level = 0;
     	emarr = new EMissile[10];
         eearr = new EExplosion[1000];
     	numberDefenseMissiles = 0;
