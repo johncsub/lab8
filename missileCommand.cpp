@@ -63,7 +63,7 @@ int main(void)
 	Structures sh;
 
 	//DT
-	createEMissiles(&game);
+	createEMissiles(&game, 0, 0);
 	//JR - Menu Object Shapes and Locations
 	drawMenu(&game);
 	//start animation
