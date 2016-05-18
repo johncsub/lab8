@@ -62,7 +62,7 @@ int main(void)
 	game.numberDefenseMissiles=0;
 	Structures sh;
 
-	//DT
+	//Changed call for function prototype 5-17-16 -DT
 	createEMissiles(&game, 0, 0);
 	//JR - Menu Object Shapes and Locations
 	drawMenu(&game);
