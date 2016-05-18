@@ -114,6 +114,9 @@ struct DExplosion {
 
 
 struct Game {
+    //global variable for level 5-17-16 -DT
+    int level;
+
     Shape box;    
 
     EMissile *emarr;                                  
@@ -142,6 +145,8 @@ struct Game {
     Shape mButton[BUTTONS];
     //Constructor 
     Game() {
+    	//level variable initialized 5-17-16 -DT
+	level = 0;
     	emarr = new EMissile[10];
         eearr = new EExplosion[1000];
     	numberDefenseMissiles = 0;
